@@ -1,2 +1,2 @@
 # fat
-Hope to be able to store and share more interesting and meaningful open source projects
+暂时用作蓝桥模拟赛工程分享
