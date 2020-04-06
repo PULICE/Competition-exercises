@@ -10,22 +10,29 @@ float  ucTmpeValue=0 ,TmpeValue=0;
 uint16_t  CONT=0;
 uint32_t ledflag=1;
 uint8_t string[20];
-uint32_t  LEDvalue=0;
+uint8_t LED_Status=0xff;
+uint32_t  LEDvalue;
 
 #define Compare_base   178
 #define Compare_led    121
-/*测试字符串相加实体实现**************************************/
+/*测试字符串相加实体实现
+ *关于解决数字出现的先后顺序不一样，相加的结果却一样的问题解决方案
+ *给不同位置的字符加位权。
+*************************************/
 uint16_t Compare_Number (uint8_t* test)
 {
 	uint16_t cont=0, i=0;
 	i=0;
 	cont=0;
 	Delay_Ms(10);
-	while((test[i]!='\r')&&(test[i]!='\n')&&(test[i]!='\0'))
+	while((test[i]!='\0')&&(test[i]!='\r')&&(test[i]!='\n'))
 	{
 	cont+=test[i];
+	
+//	printf(" %c\r\n",test[i]);
 	i++;
 	}
+//	printf("比较结束时i=%d\r\n",i);
 	return cont;
 	
 
@@ -102,32 +109,18 @@ void Compare_CMD (void)
 						       printf("\r\n");
 						break;
 						case Compare_base+Compare_led: //LCD_DisplayStringLine(Line2,"LD1:n");
-									ledflag=!ledflag;
-									if (RxBuffer[2] == '1')
-									    LED_CPY(GPIO_Pin_8);
-									else if (RxBuffer[2] == '2')
-									         LED_CPY(GPIO_Pin_9);
-									else if (RxBuffer[2] == '3')
-									         LED_CPY(GPIO_Pin_10);
-									else if (RxBuffer[2] == '4')
-									         LED_CPY(GPIO_Pin_11);
-									else if (RxBuffer[2] == '5')
-									         LED_CPY(GPIO_Pin_12);
-									else if (RxBuffer[2] == '6')
-									         LED_CPY(GPIO_Pin_13);
-									else if (RxBuffer[2] == '7')
-									         LED_CPY(GPIO_Pin_14);
-									else if (RxBuffer[2] == '8')
-									         LED_CPY(GPIO_Pin_15);
+								 ledflag=!ledflag;
+								 LED_CPY(RxBuffer[2]-'0'-1);
+								// printf("%d\r\n",(RxBuffer[2]-'0'-1));
 
 						break;
 						default:
-							     printf("erro\r\n");
+							     printf("erro");
 						break;
 					}
 
 }
-
+//K1按键长短按实现函数
 void KEY_B1 (void)
 {
 	unsigned short temp = 0;
@@ -148,23 +141,26 @@ void KEY_B1 (void)
 	}
   while(((GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0))==Bit_RESET)&&(RXFLAG !=1))
 	{
-		temp ++;
 		Delay_Ms(1);
-		if(temp>800)
-		{
-		GPIOC->ODR =0XFFFF;
-		GPIOC->ODR &=(~LEDvalue)<<8;
-			printf("%X\r\n",~(((~LEDvalue)&0xFF)));
-		LED_LOCK;
-		Delay_Ms(5);
-		}
-		else if(temp>1)
-		{
-				GPIOC->ODR = 0XFFFF;
-				LED_LOCK;
+		temp ++;
 		LCD_DisplayStringLine(Line4,(uint8_t *)" B1:P");
-
-		}
+			if(temp>800)
+			{
+				GPIOC->ODR =0XFFFF;
+				GPIOC->ODR &=(~LEDvalue)<<8;//第二次进来取反
+				//printf("%X\r\n",~(((~LEDvalue)&0xFF)));
+				LED_LOCK;
+				LEDvalue=((GPIO_ReadInputData(GPIOC)>>8) & 0XFF);
+				sprintf((char*)string," LED:%02X",(~LEDvalue)&0xFF);
+				LCD_DisplayStringLine(Line8,string);
+        Delay_Ms(500);
+		  }
+  }
+ if((temp>1)&&(temp<800))
+	{
+			GPIOC->ODR = 0XFFFF;
+			LED_LOCK;
+			LCD_DisplayStringLine(Line8,(uint8_t *)" LED:00");
 	}
 	
 	LCD_DisplayStringLine(Line4,(uint8_t *)" B1:R");
@@ -175,37 +171,31 @@ void KEY_B1 (void)
 /*LED部分的比较数据会出现部分追尾现象需要二级处理*/
 void LED_CPY(uint16_t GPIO_Pin)
 {
-							        if(RxBuffer[4] == '1')
-										{
-											GPIOC->ODR =0XFFFF;
-											GPIO_WriteBit(GPIOC, GPIO_Pin,Bit_RESET );
-									
-											LED_LOCK;
-									  }
-						        else if(RxBuffer[4] == '0')
-										{
-											GPIOC->ODR =0XFFFF;
-											GPIO_WriteBit(GPIOC, GPIO_Pin,Bit_SET );
-											LED_LOCK;
-									  }
-										else if(RxBuffer[4] == '2')
-										{
-									//		printf("已经执行为状态反转");
-											if(ledflag==1)
-											{
-											GPIOC->ODR =0XFFFF;
-											GPIO_WriteBit(GPIOC, GPIO_Pin,Bit_SET  );
-											LED_LOCK;
-										
-											}
-											else if(ledflag!=1)
-											{
-											GPIOC->ODR =0XFFFF;
-											GPIO_WriteBit(GPIOC, GPIO_Pin,Bit_RESET  );
-											LED_LOCK;
-										
-											}
-									  }
+	//看来需要定义一个8位的变量，用来保存LED的状态值，这变量最好是全局的，变量的变化就LED_Status
+			if(RxBuffer[4] == '1')
+		{
+			LED_Status &=~(1<<GPIO_Pin);
+		}
+		else if(RxBuffer[4] == '0')
+		{
+			LED_Status |= (1<<GPIO_Pin);
+
+		}
+		else if(RxBuffer[4] == '2')
+		{
+	//		printf("已经执行为状态反转");
+			if(ledflag==1)
+			{
+         LED_Status &=~(1<<GPIO_Pin);
+			}
+			else if(ledflag!=1)
+			{
+         LED_Status |=(1<<GPIO_Pin);
+		
+			}
+		}
+	GPIO_Write(GPIOC,LED_Status<<8);
+	LED_LOCK;
 }
 
 //延时函数

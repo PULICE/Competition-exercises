@@ -1274,7 +1274,7 @@ ITStatus ADC_GetITStatus(ADC_TypeDef* ADCx, uint16_t ADC_IT)
   * @brief  Clears the ADCx's interrupt pending bits.
   * @param  ADCx: where x can be 1, 2 or 3 to select the ADC peripheral.
   * @param  ADC_IT: specifies the ADC interrupt pending bit to clear.
-  *   This parameter can be any combination of the following values:
+  *   This parameter can be any combination(×éºÏ) of the following values:
   *     @arg ADC_IT_EOC: End of conversion interrupt mask
   *     @arg ADC_IT_AWD: Analog watchdog interrupt mask
   *     @arg ADC_IT_JEOC: End of injected conversion interrupt mask

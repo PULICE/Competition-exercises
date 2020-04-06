@@ -1,5 +1,6 @@
 ..\output\usart.o: ..\Sre\usart.c
 ..\output\usart.o: ..\Inc\usart.h
+..\output\usart.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h
 ..\output\usart.o: ..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h
 ..\output\usart.o: D:\Program Files (x86)\keil\keil5\ARM\CMSIS\Include\core_cm3.h
 ..\output\usart.o: D:\Program Files (x86)\keil\keil5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -32,3 +33,7 @@
 ..\output\usart.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_wwdg.h
 ..\output\usart.o: ..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h
 ..\output\usart.o: D:\Program Files (x86)\keil\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+..\output\usart.o: ..\Inc\timer.h
+..\output\usart.o: D:\Program Files (x86)\keil\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+..\output\usart.o: ..\Inc\usart.h
+..\output\usart.o: ..\Inc\led.h

@@ -8,6 +8,7 @@
 #include "key.h"
 #include "adc.h"
 #include "usart.h"
+#include "timer.h"
 #include <stdio.h>
 
 

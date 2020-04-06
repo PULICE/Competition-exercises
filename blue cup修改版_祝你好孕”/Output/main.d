@@ -37,3 +37,6 @@
 ..\output\main.o: ..\Inc\key.h
 ..\output\main.o: ..\Inc\adc.h
 ..\output\main.o: ..\Inc\usart.h
+..\output\main.o: ..\Inc\timer.h
+..\output\main.o: D:\Program Files (x86)\keil\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+..\output\main.o: ..\Inc\usart.h

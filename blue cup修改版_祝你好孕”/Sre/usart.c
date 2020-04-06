@@ -1,8 +1,5 @@
 #include "usart.h"
 #include "stm32f10x.h"
-#include "misc.h"
-#include <stdio.h>
-
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -11,7 +8,7 @@
 
 unsigned  char  RxBuffer[20];
 unsigned  short  RXFLAG = 0; 
-static volatile unsigned char RXcont=0;
+volatile uint32_t RXcont=0;
 /* Private variables ---------------------------------------------------------*/
 
 void Usart_Init(unsigned int BaudRate )
@@ -45,7 +42,7 @@ void Usart_Init(unsigned int BaudRate )
   NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
   /* Enable the USARTx Interrupt */
   NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
-  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure);
@@ -85,14 +82,16 @@ PUTCHAR_PROTOTYPE
 
 void Clear_Rxbuff(void)
 {
-		unsigned char i=0;
+		unsigned char i=0;	
 		for (i=0;i<20;i++)
 		 {
 			 RxBuffer[i]=0;
 		 }
+
 //	 	printf ("串口已经被清理目前值：%s\r\n",RxBuffer);
-	  USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
-//	  printf ("打开接收中断\r\n");
+//		USART_Cmd(USART2,ENABLE);
+//	  USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
+//	  printf ("打开接收中断");
 }
 //USART发送一个字符串，且无论什么条件一定会清零缓存数组
 void UART_Sendstring(unsigned char *str)
@@ -109,23 +108,17 @@ void UART_Sendstring(unsigned char *str)
 void USART2_IRQHandler(void)
 {
 	uint8_t temp = 0;
-
+	
   if(USART_GetITStatus(USART2, USART_IT_RXNE) == SET)
   {
-		USART_ClearITPendingBit(USART2,USART_IT_RXNE);
+		//cont并不会每次都加到5，因为有数据串口中断才会被触发，触发一次只有一个字符在接收区。
+		USART_ClearFlag(USART2,USART_IT_RXNE);
     temp= USART_ReceiveData(USART2);
 		RxBuffer[RXcont]=temp;
 		RXcont++;
 		RXFLAG =1;
-				if(temp == '\n')
-				{
-				 RXcont=0;
-				 temp = 0;
-//				 printf ("禁止接收中断\r\n");
-				 USART_ITConfig(USART2, USART_IT_RXNE, DISABLE);
-					
-  			// UART_Sendstring(RxBuffer);
-				}	
+		TCU_Flag =1;
+
   }
-  
+	
 }

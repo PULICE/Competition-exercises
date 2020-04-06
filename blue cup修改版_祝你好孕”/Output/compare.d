@@ -37,3 +37,6 @@
 ..\output\compare.o: ..\Inc\adc.h
 ..\output\compare.o: ..\Inc\usart.h
 ..\output\compare.o: D:\Program Files (x86)\keil\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+..\output\compare.o: ..\Inc\timer.h
+..\output\compare.o: D:\Program Files (x86)\keil\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+..\output\compare.o: ..\Inc\usart.h
