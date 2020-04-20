@@ -13,8 +13,8 @@ uint8_t string[20];
 uint8_t LED_Status=0xff;
 uint32_t  LEDvalue;
 
-#define Compare_base   178
-#define Compare_led    121
+#define Compare_base   175
+#define Compare_led    357
 /*测试字符串相加实体实现
  *关于解决数字出现的先后顺序不一样，相加的结果却一样的问题解决方案
  *给不同位置的字符加位权。
@@ -27,7 +27,7 @@ uint16_t Compare_Number (uint8_t* test)
 	Delay_Ms(10);
 	while((test[i]!='\0')&&(test[i]!='\r')&&(test[i]!='\n'))
 	{
-	cont+=test[i];
+	cont+=(test[i]*i);
 	
 //	printf(" %c\r\n",test[i]);
 	i++;
@@ -45,9 +45,9 @@ void Compare_CMD (void)
 {
 	
 	    CONT=Compare_Number(RxBuffer);
-			if((CONT>=299)&&(CONT<=308))
+			if((CONT>=532)&&(CONT<=554))
 			{
-				CONT=299;
+				CONT=532;
 			}
 			switch(CONT)
 					{
@@ -100,12 +100,12 @@ void Compare_CMD (void)
 										printf("B4:R\r\n");
 										}
 						break;
-						case Compare_base+85: //LCD_DisplayStringLine(Line2,"ADC");
+						case Compare_base+216: //LCD_DisplayStringLine(Line2,"ADC");
 									 ucTmpeValue=ADC1_Conv();
 									 TmpeValue = ucTmpeValue*3.3/4096;
 									 sprintf((char*)string," ADC=%.2fV ",TmpeValue);
 									 LCD_DisplayStringLine(Line3,string);
-									 printf((char *) string);
+									 printf("%s",(char *) string);
 						       printf("\r\n");
 						break;
 						case Compare_base+Compare_led: //LCD_DisplayStringLine(Line2,"LD1:n");
@@ -204,4 +204,4 @@ void Delay_Ms(uint32_t nTime)
 	TimingDelay = nTime;
 	while(TimingDelay != 0);	
 }
-
+u8 jj;

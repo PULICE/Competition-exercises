@@ -54,8 +54,8 @@ int main(void)
 		if(RXFLAG==1)
 		{
 		  Compare_CMD();			
-//		printf("Value= %d\r\n",Compare_Number(RxBuffer));
-//		printf ((char *)RxBuffer);
+		printf("Value= %d\r\n",Compare_Number(RxBuffer));
+		printf ((char *)RxBuffer);
 //		printf ("\r\n");
 		//初步猜测，gpioC端口高4位被LCD严重复用所以值随时都在改变，得想办法只在特殊时间读，之后就不读
 

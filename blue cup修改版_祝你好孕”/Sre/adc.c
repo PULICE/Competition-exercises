@@ -28,6 +28,10 @@ void Adc_GPIOInit(void)
   //配置电压采集8通道
  	ADC_RegularChannelConfig(ADC1,ADC_Channel_8,1,ADC_SampleTime_1Cycles5);
 	ADC_Cmd(ADC1,ENABLE); //使能指定的ADC1
+	  /* Enable ADC1 reset calibration register */   
+  ADC_ResetCalibration(ADC1);
+  /* Check the end of ADC1 reset calibration register */
+  while(ADC_GetResetCalibrationStatus(ADC1));
 	ADC_StartCalibration(ADC1);//启动选定的ADC校准；
 	while(ADC_GetCalibrationStatus(ADC1));//ADC1校准完成后返回RESET；
 }
