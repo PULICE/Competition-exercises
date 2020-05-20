@@ -50,6 +50,7 @@ int main(void)
 	
 	while(1)
 	{
+		printf("test");
 		/*下面测试数组能否通过相加后得出一个确定的值*************/
 		if(RXFLAG==1)
 		{

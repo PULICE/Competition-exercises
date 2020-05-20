@@ -21,12 +21,12 @@ void Usart_Init(unsigned int BaudRate )
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA |RCC_APB2Periph_AFIO, ENABLE);
 	
 	/* Configure USARTy Rx as input floating */
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
   GPIO_Init(GPIOA, &GPIO_InitStructure);
   
   /* Configure USARTy Tx as alternate function push-pull */
-  GPIO_InitStructure.GPIO_Pin =GPIO_Pin_2;
+  GPIO_InitStructure.GPIO_Pin =GPIO_Pin_3;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
   GPIO_Init(GPIOA, &GPIO_InitStructure);

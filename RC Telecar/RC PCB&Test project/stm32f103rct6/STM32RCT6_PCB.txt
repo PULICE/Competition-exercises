@@ -1,0 +1,12 @@
+Board Information Report
+Filename     : D:\My_files\Git\fat\RC Telecar\RC PCB&Test projrct\stm32f103rct6\STM32RCT6_PCB.PcbDoc
+Date         : 2020/5/20
+Time         : 22:18:43
+Time Elapsed : 00:00:00
+
+Routing Information
+    Routing completion, 100.00%
+    Connections, 243
+    Connections routed, 243
+    Connections remaining, 0
+count : 4
