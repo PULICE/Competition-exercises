@@ -1,0 +1,8 @@
+DRC Rules Export File for PCB: D:\My_files\Git\Competition-exercises\RC Telecar\RC PCB&Test project\stm32f103rct6\STM32RCT6_PCB.PcbDoc
+RuleKind=Width|RuleName=pwer|Scope=Board|Minimum=8.00
+RuleKind=Clearance|RuleName=Clearance_stm32rct6|Scope=Board|Minimum=10.00
+RuleKind=Clearance|RuleName=Clearance_1|Scope=Board|Minimum=10.00
+RuleKind=SolderMaskExpansion|RuleName=SolderMaskExpansion|Scope=Board|Minimum=4.00
+RuleKind=Width|RuleName=Width|Scope=Board|Minimum=6.00
+RuleKind=Clearance|RuleName=Clearance|Scope=Board|Minimum=10.00
+RuleKind=ShortCircuit|RuleName=ShortCircuit|Scope=Board|Allowed=0
