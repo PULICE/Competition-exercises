@@ -5,8 +5,8 @@
 #include "usart.h"
 
 int main (void) {
-	NVIC_Configuration(); 	 //ÉèÖÃNVICÖĞ¶Ï·Ö×é2:2Î»ÇÀÕ¼ÓÅÏÈ¼¶£¬2Î»ÏìÓ¦ÓÅÏÈ¼¶ 	LED_Init();			     //LED¶Ë¿Ú³õÊ¼»¯
-	OLED_Init();			       //³õÊ¼»¯OLED  
+	NVIC_Configuration(); 	 //è®¾ç½®NVICä¸­æ–­åˆ†ç»„2:2ä½æŠ¢å ä¼˜å…ˆçº§ï¼Œ2ä½å“åº”ä¼˜å…ˆçº§ 	LED_Init();			     //LEDç«¯å£åˆå§‹åŒ–
+	OLED_Init();			       //åˆå§‹åŒ–OLED  
 	uart_init(115200);
 	OLED_Clear(); 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
@@ -30,12 +30,12 @@ int main (void) {
 		GPIOC->BSRR = GPIO_Pin_2|GPIO_Pin_13;
 		Delay_ms(50);	
 		OLED_Clear();
-		OLED_ShowString(6,3,(uint8_t*)"stm32f103RC",100);//×îºóÒ»¸ö²ÎÊıÊÇ×Ö·ûµÄ´óĞ¡
-		Delay_ms(1000);	
+		OLED_ShowString(6,3,(uint8_t*)"stm32f103RC",100);//æœ€åä¸€ä¸ªå‚æ•°æ˜¯å­—ç¬¦çš„å¤§å°
+		Delay_ms(100);	
 		OLED_Clear();
-		OLED_DrawBMP(0,0,128,8,BMP1);  //Í¼Æ¬ÏÔÊ¾(Í¼Æ¬ÏÔÊ¾É÷ÓÃ£¬Éú³ÉµÄ×Ö±í½Ï´ó£¬»áÕ¼ÓÃ½Ï¶à¿Õ¼ä£¬FLASH¿Õ¼ä8KÒÔÏÂÉ÷ÓÃ)
-		Delay_ms(1000);	
-		UART_Sendstring((uint8_t*)"ÖĞÎÄ´®¿Ú²âÊÔ\r\nEnglish serial port test\r\n");
+		OLED_DrawBMP(0,0,128,8,BMP1);  //å›¾ç‰‡æ˜¾ç¤º(å›¾ç‰‡æ˜¾ç¤ºæ…ç”¨ï¼Œç”Ÿæˆçš„å­—è¡¨è¾ƒå¤§ï¼Œä¼šå ç”¨è¾ƒå¤šç©ºé—´ï¼ŒFLASHç©ºé—´8Kä»¥ä¸‹æ…ç”¨)
+		Delay_ms(100);	
+		UART_Sendstring((uint8_t*)"ä¸­æ–‡ä¸²å£æµ‹è¯•\r\nEnglish serial port test\r\n");
 	}
 }
 
