@@ -1,0 +1,2028 @@
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 6
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"core_cm3.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.__get_PSP,"ax",%progbits
+  16              		.align	1
+  17              		.global	__get_PSP
+  18              		.arch armv7-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	__get_PSP:
+  25              	.LFB0:
+  26              		.file 1 "CMSIS/CM3/CoreSupport/core_cm3.c"
+   1:CMSIS/CM3/CoreSupport/core_cm3.c **** /**************************************************************************//**
+   2:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @file     core_cm3.c
+   3:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief    CMSIS Cortex-M3 Core Peripheral Access Layer Source File
+   4:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @version  V1.30
+   5:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @date     30. October 2009
+   6:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+   7:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @note
+   8:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Copyright (C) 2009 ARM Limited. All rights reserved.
+   9:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+  10:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @par
+  11:CMSIS/CM3/CoreSupport/core_cm3.c ****  * ARM Limited (ARM) is supplying this software for use with Cortex-M 
+  12:CMSIS/CM3/CoreSupport/core_cm3.c ****  * processor based microcontrollers.  This file can be freely distributed 
+  13:CMSIS/CM3/CoreSupport/core_cm3.c ****  * within development tools that are supporting such ARM based processors. 
+  14:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+  15:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @par
+  16:CMSIS/CM3/CoreSupport/core_cm3.c ****  * THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
+  17:CMSIS/CM3/CoreSupport/core_cm3.c ****  * OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
+  18:CMSIS/CM3/CoreSupport/core_cm3.c ****  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
+  19:CMSIS/CM3/CoreSupport/core_cm3.c ****  * ARM SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR
+  20:CMSIS/CM3/CoreSupport/core_cm3.c ****  * CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
+  21:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+  22:CMSIS/CM3/CoreSupport/core_cm3.c ****  ******************************************************************************/
+  23:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+  24:CMSIS/CM3/CoreSupport/core_cm3.c **** #include <stdint.h>
+  25:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+  26:CMSIS/CM3/CoreSupport/core_cm3.c **** /* define compiler specific symbols */
+  27:CMSIS/CM3/CoreSupport/core_cm3.c **** #if defined ( __CC_ARM   )
+  28:CMSIS/CM3/CoreSupport/core_cm3.c ****   #define __ASM            __asm                                      /*!< asm keyword for ARM Comp
+  29:CMSIS/CM3/CoreSupport/core_cm3.c ****   #define __INLINE         __inline                                   /*!< inline keyword for ARM C
+  30:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+  31:CMSIS/CM3/CoreSupport/core_cm3.c **** #elif defined ( __ICCARM__ )
+  32:CMSIS/CM3/CoreSupport/core_cm3.c ****   #define __ASM           __asm                                       /*!< asm keyword for IAR Comp
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 2
+
+
+  33:CMSIS/CM3/CoreSupport/core_cm3.c ****   #define __INLINE        inline                                      /*!< inline keyword for IAR C
+  34:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+  35:CMSIS/CM3/CoreSupport/core_cm3.c **** #elif defined   (  __GNUC__  )
+  36:CMSIS/CM3/CoreSupport/core_cm3.c ****   #define __ASM            __asm                                      /*!< asm keyword for GNU Comp
+  37:CMSIS/CM3/CoreSupport/core_cm3.c ****   #define __INLINE         inline                                     /*!< inline keyword for GNU C
+  38:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+  39:CMSIS/CM3/CoreSupport/core_cm3.c **** #elif defined   (  __TASKING__  )
+  40:CMSIS/CM3/CoreSupport/core_cm3.c ****   #define __ASM            __asm                                      /*!< asm keyword for TASKING 
+  41:CMSIS/CM3/CoreSupport/core_cm3.c ****   #define __INLINE         inline                                     /*!< inline keyword for TASKI
+  42:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+  43:CMSIS/CM3/CoreSupport/core_cm3.c **** #endif
+  44:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+  45:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+  46:CMSIS/CM3/CoreSupport/core_cm3.c **** /* ###################  Compiler specific Intrinsics  ########################### */
+  47:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+  48:CMSIS/CM3/CoreSupport/core_cm3.c **** #if defined ( __CC_ARM   ) /*------------------RealView Compiler -----------------*/
+  49:CMSIS/CM3/CoreSupport/core_cm3.c **** /* ARM armcc specific functions */
+  50:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+  51:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+  52:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Return the Process Stack Pointer
+  53:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+  54:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return ProcessStackPointer
+  55:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+  56:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Return the actual process stack pointer
+  57:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+  58:CMSIS/CM3/CoreSupport/core_cm3.c **** __ASM uint32_t __get_PSP(void)
+  59:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+  60:CMSIS/CM3/CoreSupport/core_cm3.c ****   mrs r0, psp
+  61:CMSIS/CM3/CoreSupport/core_cm3.c ****   bx lr
+  62:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+  63:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+  64:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+  65:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Set the Process Stack Pointer
+  66:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+  67:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  topOfProcStack  Process Stack Pointer
+  68:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+  69:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Assign the value ProcessStackPointer to the MSP 
+  70:CMSIS/CM3/CoreSupport/core_cm3.c ****  * (process stack pointer) Cortex processor register
+  71:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+  72:CMSIS/CM3/CoreSupport/core_cm3.c **** __ASM void __set_PSP(uint32_t topOfProcStack)
+  73:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+  74:CMSIS/CM3/CoreSupport/core_cm3.c ****   msr psp, r0
+  75:CMSIS/CM3/CoreSupport/core_cm3.c ****   bx lr
+  76:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+  77:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+  78:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+  79:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Return the Main Stack Pointer
+  80:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+  81:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return Main Stack Pointer
+  82:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+  83:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Return the current value of the MSP (main stack pointer)
+  84:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Cortex processor register
+  85:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+  86:CMSIS/CM3/CoreSupport/core_cm3.c **** __ASM uint32_t __get_MSP(void)
+  87:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+  88:CMSIS/CM3/CoreSupport/core_cm3.c ****   mrs r0, msp
+  89:CMSIS/CM3/CoreSupport/core_cm3.c ****   bx lr
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 3
+
+
+  90:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+  91:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+  92:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+  93:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Set the Main Stack Pointer
+  94:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+  95:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  topOfMainStack  Main Stack Pointer
+  96:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+  97:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Assign the value mainStackPointer to the MSP 
+  98:CMSIS/CM3/CoreSupport/core_cm3.c ****  * (main stack pointer) Cortex processor register
+  99:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 100:CMSIS/CM3/CoreSupport/core_cm3.c **** __ASM void __set_MSP(uint32_t mainStackPointer)
+ 101:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 102:CMSIS/CM3/CoreSupport/core_cm3.c ****   msr msp, r0
+ 103:CMSIS/CM3/CoreSupport/core_cm3.c ****   bx lr
+ 104:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 105:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 106:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 107:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Reverse byte order in unsigned short value
+ 108:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 109:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param   value  value to reverse
+ 110:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return         reversed value
+ 111:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 112:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Reverse byte order in unsigned short value
+ 113:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 114:CMSIS/CM3/CoreSupport/core_cm3.c **** __ASM uint32_t __REV16(uint16_t value)
+ 115:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 116:CMSIS/CM3/CoreSupport/core_cm3.c ****   rev16 r0, r0
+ 117:CMSIS/CM3/CoreSupport/core_cm3.c ****   bx lr
+ 118:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 119:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 120:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 121:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Reverse byte order in signed short value with sign extension to integer
+ 122:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 123:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param   value  value to reverse
+ 124:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return         reversed value
+ 125:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 126:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Reverse byte order in signed short value with sign extension to integer
+ 127:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 128:CMSIS/CM3/CoreSupport/core_cm3.c **** __ASM int32_t __REVSH(int16_t value)
+ 129:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 130:CMSIS/CM3/CoreSupport/core_cm3.c ****   revsh r0, r0
+ 131:CMSIS/CM3/CoreSupport/core_cm3.c ****   bx lr
+ 132:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 133:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 134:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 135:CMSIS/CM3/CoreSupport/core_cm3.c **** #if (__ARMCC_VERSION < 400000)
+ 136:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 137:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 138:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Remove the exclusive lock created by ldrex
+ 139:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 140:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Removes the exclusive lock which is created by ldrex.
+ 141:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 142:CMSIS/CM3/CoreSupport/core_cm3.c **** __ASM void __CLREX(void)
+ 143:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 144:CMSIS/CM3/CoreSupport/core_cm3.c ****   clrex
+ 145:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 146:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 4
+
+
+ 147:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 148:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Return the Base Priority value
+ 149:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 150:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return BasePriority
+ 151:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 152:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Return the content of the base priority register
+ 153:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 154:CMSIS/CM3/CoreSupport/core_cm3.c **** __ASM uint32_t  __get_BASEPRI(void)
+ 155:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 156:CMSIS/CM3/CoreSupport/core_cm3.c ****   mrs r0, basepri
+ 157:CMSIS/CM3/CoreSupport/core_cm3.c ****   bx lr
+ 158:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 159:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 160:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 161:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Set the Base Priority value
+ 162:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 163:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  basePri  BasePriority
+ 164:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 165:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Set the base priority register
+ 166:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 167:CMSIS/CM3/CoreSupport/core_cm3.c **** __ASM void __set_BASEPRI(uint32_t basePri)
+ 168:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 169:CMSIS/CM3/CoreSupport/core_cm3.c ****   msr basepri, r0
+ 170:CMSIS/CM3/CoreSupport/core_cm3.c ****   bx lr
+ 171:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 172:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 173:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 174:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Return the Priority Mask value
+ 175:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 176:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return PriMask
+ 177:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 178:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Return state of the priority mask bit from the priority mask register
+ 179:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 180:CMSIS/CM3/CoreSupport/core_cm3.c **** __ASM uint32_t __get_PRIMASK(void)
+ 181:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 182:CMSIS/CM3/CoreSupport/core_cm3.c ****   mrs r0, primask
+ 183:CMSIS/CM3/CoreSupport/core_cm3.c ****   bx lr
+ 184:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 185:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 186:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 187:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Set the Priority Mask value
+ 188:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 189:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  priMask  PriMask
+ 190:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 191:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Set the priority mask bit in the priority mask register
+ 192:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 193:CMSIS/CM3/CoreSupport/core_cm3.c **** __ASM void __set_PRIMASK(uint32_t priMask)
+ 194:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 195:CMSIS/CM3/CoreSupport/core_cm3.c ****   msr primask, r0
+ 196:CMSIS/CM3/CoreSupport/core_cm3.c ****   bx lr
+ 197:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 198:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 199:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 200:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Return the Fault Mask value
+ 201:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 202:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return FaultMask
+ 203:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 5
+
+
+ 204:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Return the content of the fault mask register
+ 205:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 206:CMSIS/CM3/CoreSupport/core_cm3.c **** __ASM uint32_t  __get_FAULTMASK(void)
+ 207:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 208:CMSIS/CM3/CoreSupport/core_cm3.c ****   mrs r0, faultmask
+ 209:CMSIS/CM3/CoreSupport/core_cm3.c ****   bx lr
+ 210:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 211:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 212:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 213:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Set the Fault Mask value
+ 214:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 215:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  faultMask  faultMask value
+ 216:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 217:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Set the fault mask register
+ 218:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 219:CMSIS/CM3/CoreSupport/core_cm3.c **** __ASM void __set_FAULTMASK(uint32_t faultMask)
+ 220:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 221:CMSIS/CM3/CoreSupport/core_cm3.c ****   msr faultmask, r0
+ 222:CMSIS/CM3/CoreSupport/core_cm3.c ****   bx lr
+ 223:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 224:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 225:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 226:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Return the Control Register value
+ 227:CMSIS/CM3/CoreSupport/core_cm3.c ****  * 
+ 228:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return Control value
+ 229:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 230:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Return the content of the control register
+ 231:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 232:CMSIS/CM3/CoreSupport/core_cm3.c **** __ASM uint32_t __get_CONTROL(void)
+ 233:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 234:CMSIS/CM3/CoreSupport/core_cm3.c ****   mrs r0, control
+ 235:CMSIS/CM3/CoreSupport/core_cm3.c ****   bx lr
+ 236:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 237:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 238:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 239:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Set the Control Register value
+ 240:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 241:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  control  Control value
+ 242:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 243:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Set the control register
+ 244:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 245:CMSIS/CM3/CoreSupport/core_cm3.c **** __ASM void __set_CONTROL(uint32_t control)
+ 246:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 247:CMSIS/CM3/CoreSupport/core_cm3.c ****   msr control, r0
+ 248:CMSIS/CM3/CoreSupport/core_cm3.c ****   bx lr
+ 249:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 250:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 251:CMSIS/CM3/CoreSupport/core_cm3.c **** #endif /* __ARMCC_VERSION  */ 
+ 252:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 253:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 254:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 255:CMSIS/CM3/CoreSupport/core_cm3.c **** #elif (defined (__ICCARM__)) /*------------------ ICC Compiler -------------------*/
+ 256:CMSIS/CM3/CoreSupport/core_cm3.c **** /* IAR iccarm specific functions */
+ 257:CMSIS/CM3/CoreSupport/core_cm3.c **** #pragma diag_suppress=Pe940
+ 258:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 259:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 260:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Return the Process Stack Pointer
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 6
+
+
+ 261:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 262:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return ProcessStackPointer
+ 263:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 264:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Return the actual process stack pointer
+ 265:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 266:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __get_PSP(void)
+ 267:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 268:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("mrs r0, psp");
+ 269:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("bx lr");
+ 270:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 271:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 272:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 273:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Set the Process Stack Pointer
+ 274:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 275:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  topOfProcStack  Process Stack Pointer
+ 276:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 277:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Assign the value ProcessStackPointer to the MSP 
+ 278:CMSIS/CM3/CoreSupport/core_cm3.c ****  * (process stack pointer) Cortex processor register
+ 279:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 280:CMSIS/CM3/CoreSupport/core_cm3.c **** void __set_PSP(uint32_t topOfProcStack)
+ 281:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 282:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("msr psp, r0");
+ 283:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("bx lr");
+ 284:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 285:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 286:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 287:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Return the Main Stack Pointer
+ 288:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 289:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return Main Stack Pointer
+ 290:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 291:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Return the current value of the MSP (main stack pointer)
+ 292:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Cortex processor register
+ 293:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 294:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __get_MSP(void)
+ 295:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 296:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("mrs r0, msp");
+ 297:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("bx lr");
+ 298:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 299:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 300:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 301:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Set the Main Stack Pointer
+ 302:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 303:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  topOfMainStack  Main Stack Pointer
+ 304:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 305:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Assign the value mainStackPointer to the MSP 
+ 306:CMSIS/CM3/CoreSupport/core_cm3.c ****  * (main stack pointer) Cortex processor register
+ 307:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 308:CMSIS/CM3/CoreSupport/core_cm3.c **** void __set_MSP(uint32_t topOfMainStack)
+ 309:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 310:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("msr msp, r0");
+ 311:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("bx lr");
+ 312:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 313:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 314:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 315:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Reverse byte order in unsigned short value
+ 316:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 317:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  value  value to reverse
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 7
+
+
+ 318:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return        reversed value
+ 319:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 320:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Reverse byte order in unsigned short value
+ 321:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 322:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __REV16(uint16_t value)
+ 323:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 324:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("rev16 r0, r0");
+ 325:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("bx lr");
+ 326:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 327:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 328:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 329:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Reverse bit order of value
+ 330:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 331:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  value  value to reverse
+ 332:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return        reversed value
+ 333:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 334:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Reverse bit order of value
+ 335:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 336:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __RBIT(uint32_t value)
+ 337:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 338:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("rbit r0, r0");
+ 339:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("bx lr");
+ 340:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 341:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 342:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 343:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  LDR Exclusive (8 bit)
+ 344:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 345:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  *addr  address pointer
+ 346:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return        value of (*address)
+ 347:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 348:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Exclusive LDR command for 8 bit values)
+ 349:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 350:CMSIS/CM3/CoreSupport/core_cm3.c **** uint8_t __LDREXB(uint8_t *addr)
+ 351:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 352:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("ldrexb r0, [r0]");
+ 353:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("bx lr"); 
+ 354:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 355:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 356:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 357:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  LDR Exclusive (16 bit)
+ 358:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 359:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  *addr  address pointer
+ 360:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return        value of (*address)
+ 361:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 362:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Exclusive LDR command for 16 bit values
+ 363:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 364:CMSIS/CM3/CoreSupport/core_cm3.c **** uint16_t __LDREXH(uint16_t *addr)
+ 365:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 366:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("ldrexh r0, [r0]");
+ 367:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("bx lr");
+ 368:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 369:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 370:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 371:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  LDR Exclusive (32 bit)
+ 372:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 373:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  *addr  address pointer
+ 374:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return        value of (*address)
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 8
+
+
+ 375:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 376:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Exclusive LDR command for 32 bit values
+ 377:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 378:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __LDREXW(uint32_t *addr)
+ 379:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 380:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("ldrex r0, [r0]");
+ 381:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("bx lr");
+ 382:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 383:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 384:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 385:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  STR Exclusive (8 bit)
+ 386:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 387:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  value  value to store
+ 388:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  *addr  address pointer
+ 389:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return        successful / failed
+ 390:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 391:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Exclusive STR command for 8 bit values
+ 392:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 393:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __STREXB(uint8_t value, uint8_t *addr)
+ 394:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 395:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("strexb r0, r0, [r1]");
+ 396:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("bx lr");
+ 397:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 398:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 399:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 400:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  STR Exclusive (16 bit)
+ 401:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 402:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  value  value to store
+ 403:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  *addr  address pointer
+ 404:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return        successful / failed
+ 405:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 406:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Exclusive STR command for 16 bit values
+ 407:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 408:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __STREXH(uint16_t value, uint16_t *addr)
+ 409:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 410:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("strexh r0, r0, [r1]");
+ 411:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("bx lr");
+ 412:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 413:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 414:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 415:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  STR Exclusive (32 bit)
+ 416:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 417:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  value  value to store
+ 418:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  *addr  address pointer
+ 419:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return        successful / failed
+ 420:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 421:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Exclusive STR command for 32 bit values
+ 422:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 423:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __STREXW(uint32_t value, uint32_t *addr)
+ 424:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 425:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("strex r0, r0, [r1]");
+ 426:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM("bx lr");
+ 427:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 428:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 429:CMSIS/CM3/CoreSupport/core_cm3.c **** #pragma diag_default=Pe940
+ 430:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 431:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 9
+
+
+ 432:CMSIS/CM3/CoreSupport/core_cm3.c **** #elif (defined (__GNUC__)) /*------------------ GNU Compiler ---------------------*/
+ 433:CMSIS/CM3/CoreSupport/core_cm3.c **** /* GNU gcc specific functions */
+ 434:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 435:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 436:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Return the Process Stack Pointer
+ 437:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 438:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return ProcessStackPointer
+ 439:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 440:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Return the actual process stack pointer
+ 441:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 442:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __get_PSP(void) __attribute__( ( naked ) );
+ 443:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __get_PSP(void)
+ 444:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+  27              		.loc 1 444 1
+  28              		.cfi_startproc
+  29              		@ Naked Function: prologue and epilogue provided by programmer.
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+ 445:CMSIS/CM3/CoreSupport/core_cm3.c ****   uint32_t result=0;
+  32              		.loc 1 445 12
+  33 0000 0024     		movs	r4, #0
+ 446:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 447:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM volatile ("MRS %0, psp\n\t" 
+  34              		.loc 1 447 3
+  35              		.syntax unified
+  36              	@ 447 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+  37 0002 EFF30983 		MRS r3, psp
+  38 0006 1846     		MOV r0, r3 
+  39 0008 7047     		BX  lr     
+  40              		
+  41              	@ 0 "" 2
+  42              		.thumb
+  43              		.syntax unified
+  44 000a 1C46     		mov	r4, r3
+ 448:CMSIS/CM3/CoreSupport/core_cm3.c ****                   "MOV r0, %0 \n\t"
+ 449:CMSIS/CM3/CoreSupport/core_cm3.c ****                   "BX  lr     \n\t"  : "=r" (result) );
+ 450:CMSIS/CM3/CoreSupport/core_cm3.c ****   return(result);
+  45              		.loc 1 450 9
+  46 000c 2346     		mov	r3, r4
+ 451:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+  47              		.loc 1 451 1
+  48 000e 1846     		mov	r0, r3
+  49              		.cfi_endproc
+  50              	.LFE0:
+  52              		.section	.text.__set_PSP,"ax",%progbits
+  53              		.align	1
+  54              		.global	__set_PSP
+  55              		.syntax unified
+  56              		.thumb
+  57              		.thumb_func
+  58              		.fpu softvfp
+  60              	__set_PSP:
+  61              	.LFB1:
+ 452:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 453:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 454:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Set the Process Stack Pointer
+ 455:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 10
+
+
+ 456:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  topOfProcStack  Process Stack Pointer
+ 457:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 458:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Assign the value ProcessStackPointer to the MSP 
+ 459:CMSIS/CM3/CoreSupport/core_cm3.c ****  * (process stack pointer) Cortex processor register
+ 460:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 461:CMSIS/CM3/CoreSupport/core_cm3.c **** void __set_PSP(uint32_t topOfProcStack) __attribute__( ( naked ) );
+ 462:CMSIS/CM3/CoreSupport/core_cm3.c **** void __set_PSP(uint32_t topOfProcStack)
+ 463:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+  62              		.loc 1 463 1
+  63              		.cfi_startproc
+  64              		@ Naked Function: prologue and epilogue provided by programmer.
+  65              		@ args = 0, pretend = 0, frame = 0
+  66              		@ frame_needed = 1, uses_anonymous_args = 0
+  67 0000 0346     		mov	r3, r0
+ 464:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM volatile ("MSR psp, %0\n\t"
+  68              		.loc 1 464 3
+  69              		.syntax unified
+  70              	@ 464 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+  71 0002 83F30988 		MSR psp, r3
+  72 0006 7047     		BX  lr     
+  73              		
+  74              	@ 0 "" 2
+ 465:CMSIS/CM3/CoreSupport/core_cm3.c ****                   "BX  lr     \n\t" : : "r" (topOfProcStack) );
+ 466:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+  75              		.loc 1 466 1
+  76              		.thumb
+  77              		.syntax unified
+  78 0008 00BF     		nop
+  79              		.cfi_endproc
+  80              	.LFE1:
+  82              		.section	.text.__get_MSP,"ax",%progbits
+  83              		.align	1
+  84              		.global	__get_MSP
+  85              		.syntax unified
+  86              		.thumb
+  87              		.thumb_func
+  88              		.fpu softvfp
+  90              	__get_MSP:
+  91              	.LFB2:
+ 467:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 468:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 469:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Return the Main Stack Pointer
+ 470:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 471:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return Main Stack Pointer
+ 472:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 473:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Return the current value of the MSP (main stack pointer)
+ 474:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Cortex processor register
+ 475:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 476:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __get_MSP(void) __attribute__( ( naked ) );
+ 477:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __get_MSP(void)
+ 478:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+  92              		.loc 1 478 1
+  93              		.cfi_startproc
+  94              		@ Naked Function: prologue and epilogue provided by programmer.
+  95              		@ args = 0, pretend = 0, frame = 0
+  96              		@ frame_needed = 1, uses_anonymous_args = 0
+ 479:CMSIS/CM3/CoreSupport/core_cm3.c ****   uint32_t result=0;
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 11
+
+
+  97              		.loc 1 479 12
+  98 0000 0024     		movs	r4, #0
+ 480:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 481:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM volatile ("MRS %0, msp\n\t" 
+  99              		.loc 1 481 3
+ 100              		.syntax unified
+ 101              	@ 481 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+ 102 0002 EFF30883 		MRS r3, msp
+ 103 0006 1846     		MOV r0, r3 
+ 104 0008 7047     		BX  lr     
+ 105              		
+ 106              	@ 0 "" 2
+ 107              		.thumb
+ 108              		.syntax unified
+ 109 000a 1C46     		mov	r4, r3
+ 482:CMSIS/CM3/CoreSupport/core_cm3.c ****                   "MOV r0, %0 \n\t"
+ 483:CMSIS/CM3/CoreSupport/core_cm3.c ****                   "BX  lr     \n\t"  : "=r" (result) );
+ 484:CMSIS/CM3/CoreSupport/core_cm3.c ****   return(result);
+ 110              		.loc 1 484 9
+ 111 000c 2346     		mov	r3, r4
+ 485:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 112              		.loc 1 485 1
+ 113 000e 1846     		mov	r0, r3
+ 114              		.cfi_endproc
+ 115              	.LFE2:
+ 117              		.section	.text.__set_MSP,"ax",%progbits
+ 118              		.align	1
+ 119              		.global	__set_MSP
+ 120              		.syntax unified
+ 121              		.thumb
+ 122              		.thumb_func
+ 123              		.fpu softvfp
+ 125              	__set_MSP:
+ 126              	.LFB3:
+ 486:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 487:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 488:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Set the Main Stack Pointer
+ 489:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 490:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  topOfMainStack  Main Stack Pointer
+ 491:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 492:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Assign the value mainStackPointer to the MSP 
+ 493:CMSIS/CM3/CoreSupport/core_cm3.c ****  * (main stack pointer) Cortex processor register
+ 494:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 495:CMSIS/CM3/CoreSupport/core_cm3.c **** void __set_MSP(uint32_t topOfMainStack) __attribute__( ( naked ) );
+ 496:CMSIS/CM3/CoreSupport/core_cm3.c **** void __set_MSP(uint32_t topOfMainStack)
+ 497:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 127              		.loc 1 497 1
+ 128              		.cfi_startproc
+ 129              		@ Naked Function: prologue and epilogue provided by programmer.
+ 130              		@ args = 0, pretend = 0, frame = 0
+ 131              		@ frame_needed = 1, uses_anonymous_args = 0
+ 132 0000 0346     		mov	r3, r0
+ 498:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM volatile ("MSR msp, %0\n\t"
+ 133              		.loc 1 498 3
+ 134              		.syntax unified
+ 135              	@ 498 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+ 136 0002 83F30888 		MSR msp, r3
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 12
+
+
+ 137 0006 7047     		BX  lr     
+ 138              		
+ 139              	@ 0 "" 2
+ 499:CMSIS/CM3/CoreSupport/core_cm3.c ****                   "BX  lr     \n\t" : : "r" (topOfMainStack) );
+ 500:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 140              		.loc 1 500 1
+ 141              		.thumb
+ 142              		.syntax unified
+ 143 0008 00BF     		nop
+ 144              		.cfi_endproc
+ 145              	.LFE3:
+ 147              		.section	.text.__get_BASEPRI,"ax",%progbits
+ 148              		.align	1
+ 149              		.global	__get_BASEPRI
+ 150              		.syntax unified
+ 151              		.thumb
+ 152              		.thumb_func
+ 153              		.fpu softvfp
+ 155              	__get_BASEPRI:
+ 156              	.LFB4:
+ 501:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 502:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 503:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Return the Base Priority value
+ 504:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 505:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return BasePriority
+ 506:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 507:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Return the content of the base priority register
+ 508:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 509:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __get_BASEPRI(void)
+ 510:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 157              		.loc 1 510 1
+ 158              		.cfi_startproc
+ 159              		@ args = 0, pretend = 0, frame = 8
+ 160              		@ frame_needed = 1, uses_anonymous_args = 0
+ 161              		@ link register save eliminated.
+ 162 0000 80B4     		push	{r7}
+ 163              	.LCFI0:
+ 164              		.cfi_def_cfa_offset 4
+ 165              		.cfi_offset 7, -4
+ 166 0002 83B0     		sub	sp, sp, #12
+ 167              	.LCFI1:
+ 168              		.cfi_def_cfa_offset 16
+ 169 0004 00AF     		add	r7, sp, #0
+ 170              	.LCFI2:
+ 171              		.cfi_def_cfa_register 7
+ 511:CMSIS/CM3/CoreSupport/core_cm3.c ****   uint32_t result=0;
+ 172              		.loc 1 511 12
+ 173 0006 0023     		movs	r3, #0
+ 174 0008 7B60     		str	r3, [r7, #4]
+ 512:CMSIS/CM3/CoreSupport/core_cm3.c ****   
+ 513:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM volatile ("MRS %0, basepri_max" : "=r" (result) );
+ 175              		.loc 1 513 3
+ 176              		.syntax unified
+ 177              	@ 513 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+ 178 000a EFF31283 		MRS r3, basepri_max
+ 179              	@ 0 "" 2
+ 180              		.thumb
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 13
+
+
+ 181              		.syntax unified
+ 182 000e 7B60     		str	r3, [r7, #4]
+ 514:CMSIS/CM3/CoreSupport/core_cm3.c ****   return(result);
+ 183              		.loc 1 514 9
+ 184 0010 7B68     		ldr	r3, [r7, #4]
+ 515:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 185              		.loc 1 515 1
+ 186 0012 1846     		mov	r0, r3
+ 187 0014 0C37     		adds	r7, r7, #12
+ 188              	.LCFI3:
+ 189              		.cfi_def_cfa_offset 4
+ 190 0016 BD46     		mov	sp, r7
+ 191              	.LCFI4:
+ 192              		.cfi_def_cfa_register 13
+ 193              		@ sp needed
+ 194 0018 80BC     		pop	{r7}
+ 195              	.LCFI5:
+ 196              		.cfi_restore 7
+ 197              		.cfi_def_cfa_offset 0
+ 198 001a 7047     		bx	lr
+ 199              		.cfi_endproc
+ 200              	.LFE4:
+ 202              		.section	.text.__set_BASEPRI,"ax",%progbits
+ 203              		.align	1
+ 204              		.global	__set_BASEPRI
+ 205              		.syntax unified
+ 206              		.thumb
+ 207              		.thumb_func
+ 208              		.fpu softvfp
+ 210              	__set_BASEPRI:
+ 211              	.LFB5:
+ 516:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 517:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 518:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Set the Base Priority value
+ 519:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 520:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  basePri  BasePriority
+ 521:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 522:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Set the base priority register
+ 523:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 524:CMSIS/CM3/CoreSupport/core_cm3.c **** void __set_BASEPRI(uint32_t value)
+ 525:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 212              		.loc 1 525 1
+ 213              		.cfi_startproc
+ 214              		@ args = 0, pretend = 0, frame = 8
+ 215              		@ frame_needed = 1, uses_anonymous_args = 0
+ 216              		@ link register save eliminated.
+ 217 0000 80B4     		push	{r7}
+ 218              	.LCFI6:
+ 219              		.cfi_def_cfa_offset 4
+ 220              		.cfi_offset 7, -4
+ 221 0002 83B0     		sub	sp, sp, #12
+ 222              	.LCFI7:
+ 223              		.cfi_def_cfa_offset 16
+ 224 0004 00AF     		add	r7, sp, #0
+ 225              	.LCFI8:
+ 226              		.cfi_def_cfa_register 7
+ 227 0006 7860     		str	r0, [r7, #4]
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 14
+
+
+ 526:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM volatile ("MSR basepri, %0" : : "r" (value) );
+ 228              		.loc 1 526 3
+ 229 0008 7B68     		ldr	r3, [r7, #4]
+ 230              		.syntax unified
+ 231              	@ 526 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+ 232 000a 83F31188 		MSR basepri, r3
+ 233              	@ 0 "" 2
+ 527:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 234              		.loc 1 527 1
+ 235              		.thumb
+ 236              		.syntax unified
+ 237 000e 00BF     		nop
+ 238 0010 0C37     		adds	r7, r7, #12
+ 239              	.LCFI9:
+ 240              		.cfi_def_cfa_offset 4
+ 241 0012 BD46     		mov	sp, r7
+ 242              	.LCFI10:
+ 243              		.cfi_def_cfa_register 13
+ 244              		@ sp needed
+ 245 0014 80BC     		pop	{r7}
+ 246              	.LCFI11:
+ 247              		.cfi_restore 7
+ 248              		.cfi_def_cfa_offset 0
+ 249 0016 7047     		bx	lr
+ 250              		.cfi_endproc
+ 251              	.LFE5:
+ 253              		.section	.text.__get_PRIMASK,"ax",%progbits
+ 254              		.align	1
+ 255              		.global	__get_PRIMASK
+ 256              		.syntax unified
+ 257              		.thumb
+ 258              		.thumb_func
+ 259              		.fpu softvfp
+ 261              	__get_PRIMASK:
+ 262              	.LFB6:
+ 528:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 529:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 530:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Return the Priority Mask value
+ 531:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 532:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return PriMask
+ 533:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 534:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Return state of the priority mask bit from the priority mask register
+ 535:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 536:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __get_PRIMASK(void)
+ 537:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 263              		.loc 1 537 1
+ 264              		.cfi_startproc
+ 265              		@ args = 0, pretend = 0, frame = 8
+ 266              		@ frame_needed = 1, uses_anonymous_args = 0
+ 267              		@ link register save eliminated.
+ 268 0000 80B4     		push	{r7}
+ 269              	.LCFI12:
+ 270              		.cfi_def_cfa_offset 4
+ 271              		.cfi_offset 7, -4
+ 272 0002 83B0     		sub	sp, sp, #12
+ 273              	.LCFI13:
+ 274              		.cfi_def_cfa_offset 16
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 15
+
+
+ 275 0004 00AF     		add	r7, sp, #0
+ 276              	.LCFI14:
+ 277              		.cfi_def_cfa_register 7
+ 538:CMSIS/CM3/CoreSupport/core_cm3.c ****   uint32_t result=0;
+ 278              		.loc 1 538 12
+ 279 0006 0023     		movs	r3, #0
+ 280 0008 7B60     		str	r3, [r7, #4]
+ 539:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 540:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM volatile ("MRS %0, primask" : "=r" (result) );
+ 281              		.loc 1 540 3
+ 282              		.syntax unified
+ 283              	@ 540 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+ 284 000a EFF31083 		MRS r3, primask
+ 285              	@ 0 "" 2
+ 286              		.thumb
+ 287              		.syntax unified
+ 288 000e 7B60     		str	r3, [r7, #4]
+ 541:CMSIS/CM3/CoreSupport/core_cm3.c ****   return(result);
+ 289              		.loc 1 541 9
+ 290 0010 7B68     		ldr	r3, [r7, #4]
+ 542:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 291              		.loc 1 542 1
+ 292 0012 1846     		mov	r0, r3
+ 293 0014 0C37     		adds	r7, r7, #12
+ 294              	.LCFI15:
+ 295              		.cfi_def_cfa_offset 4
+ 296 0016 BD46     		mov	sp, r7
+ 297              	.LCFI16:
+ 298              		.cfi_def_cfa_register 13
+ 299              		@ sp needed
+ 300 0018 80BC     		pop	{r7}
+ 301              	.LCFI17:
+ 302              		.cfi_restore 7
+ 303              		.cfi_def_cfa_offset 0
+ 304 001a 7047     		bx	lr
+ 305              		.cfi_endproc
+ 306              	.LFE6:
+ 308              		.section	.text.__set_PRIMASK,"ax",%progbits
+ 309              		.align	1
+ 310              		.global	__set_PRIMASK
+ 311              		.syntax unified
+ 312              		.thumb
+ 313              		.thumb_func
+ 314              		.fpu softvfp
+ 316              	__set_PRIMASK:
+ 317              	.LFB7:
+ 543:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 544:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 545:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Set the Priority Mask value
+ 546:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 547:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  priMask  PriMask
+ 548:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 549:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Set the priority mask bit in the priority mask register
+ 550:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 551:CMSIS/CM3/CoreSupport/core_cm3.c **** void __set_PRIMASK(uint32_t priMask)
+ 552:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 318              		.loc 1 552 1
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 16
+
+
+ 319              		.cfi_startproc
+ 320              		@ args = 0, pretend = 0, frame = 8
+ 321              		@ frame_needed = 1, uses_anonymous_args = 0
+ 322              		@ link register save eliminated.
+ 323 0000 80B4     		push	{r7}
+ 324              	.LCFI18:
+ 325              		.cfi_def_cfa_offset 4
+ 326              		.cfi_offset 7, -4
+ 327 0002 83B0     		sub	sp, sp, #12
+ 328              	.LCFI19:
+ 329              		.cfi_def_cfa_offset 16
+ 330 0004 00AF     		add	r7, sp, #0
+ 331              	.LCFI20:
+ 332              		.cfi_def_cfa_register 7
+ 333 0006 7860     		str	r0, [r7, #4]
+ 553:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM volatile ("MSR primask, %0" : : "r" (priMask) );
+ 334              		.loc 1 553 3
+ 335 0008 7B68     		ldr	r3, [r7, #4]
+ 336              		.syntax unified
+ 337              	@ 553 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+ 338 000a 83F31088 		MSR primask, r3
+ 339              	@ 0 "" 2
+ 554:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 340              		.loc 1 554 1
+ 341              		.thumb
+ 342              		.syntax unified
+ 343 000e 00BF     		nop
+ 344 0010 0C37     		adds	r7, r7, #12
+ 345              	.LCFI21:
+ 346              		.cfi_def_cfa_offset 4
+ 347 0012 BD46     		mov	sp, r7
+ 348              	.LCFI22:
+ 349              		.cfi_def_cfa_register 13
+ 350              		@ sp needed
+ 351 0014 80BC     		pop	{r7}
+ 352              	.LCFI23:
+ 353              		.cfi_restore 7
+ 354              		.cfi_def_cfa_offset 0
+ 355 0016 7047     		bx	lr
+ 356              		.cfi_endproc
+ 357              	.LFE7:
+ 359              		.section	.text.__get_FAULTMASK,"ax",%progbits
+ 360              		.align	1
+ 361              		.global	__get_FAULTMASK
+ 362              		.syntax unified
+ 363              		.thumb
+ 364              		.thumb_func
+ 365              		.fpu softvfp
+ 367              	__get_FAULTMASK:
+ 368              	.LFB8:
+ 555:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 556:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 557:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Return the Fault Mask value
+ 558:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 559:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return FaultMask
+ 560:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 561:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Return the content of the fault mask register
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 17
+
+
+ 562:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 563:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __get_FAULTMASK(void)
+ 564:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 369              		.loc 1 564 1
+ 370              		.cfi_startproc
+ 371              		@ args = 0, pretend = 0, frame = 8
+ 372              		@ frame_needed = 1, uses_anonymous_args = 0
+ 373              		@ link register save eliminated.
+ 374 0000 80B4     		push	{r7}
+ 375              	.LCFI24:
+ 376              		.cfi_def_cfa_offset 4
+ 377              		.cfi_offset 7, -4
+ 378 0002 83B0     		sub	sp, sp, #12
+ 379              	.LCFI25:
+ 380              		.cfi_def_cfa_offset 16
+ 381 0004 00AF     		add	r7, sp, #0
+ 382              	.LCFI26:
+ 383              		.cfi_def_cfa_register 7
+ 565:CMSIS/CM3/CoreSupport/core_cm3.c ****   uint32_t result=0;
+ 384              		.loc 1 565 12
+ 385 0006 0023     		movs	r3, #0
+ 386 0008 7B60     		str	r3, [r7, #4]
+ 566:CMSIS/CM3/CoreSupport/core_cm3.c ****   
+ 567:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM volatile ("MRS %0, faultmask" : "=r" (result) );
+ 387              		.loc 1 567 3
+ 388              		.syntax unified
+ 389              	@ 567 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+ 390 000a EFF31383 		MRS r3, faultmask
+ 391              	@ 0 "" 2
+ 392              		.thumb
+ 393              		.syntax unified
+ 394 000e 7B60     		str	r3, [r7, #4]
+ 568:CMSIS/CM3/CoreSupport/core_cm3.c ****   return(result);
+ 395              		.loc 1 568 9
+ 396 0010 7B68     		ldr	r3, [r7, #4]
+ 569:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 397              		.loc 1 569 1
+ 398 0012 1846     		mov	r0, r3
+ 399 0014 0C37     		adds	r7, r7, #12
+ 400              	.LCFI27:
+ 401              		.cfi_def_cfa_offset 4
+ 402 0016 BD46     		mov	sp, r7
+ 403              	.LCFI28:
+ 404              		.cfi_def_cfa_register 13
+ 405              		@ sp needed
+ 406 0018 80BC     		pop	{r7}
+ 407              	.LCFI29:
+ 408              		.cfi_restore 7
+ 409              		.cfi_def_cfa_offset 0
+ 410 001a 7047     		bx	lr
+ 411              		.cfi_endproc
+ 412              	.LFE8:
+ 414              		.section	.text.__set_FAULTMASK,"ax",%progbits
+ 415              		.align	1
+ 416              		.global	__set_FAULTMASK
+ 417              		.syntax unified
+ 418              		.thumb
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 18
+
+
+ 419              		.thumb_func
+ 420              		.fpu softvfp
+ 422              	__set_FAULTMASK:
+ 423              	.LFB9:
+ 570:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 571:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 572:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Set the Fault Mask value
+ 573:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 574:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  faultMask  faultMask value
+ 575:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 576:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Set the fault mask register
+ 577:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 578:CMSIS/CM3/CoreSupport/core_cm3.c **** void __set_FAULTMASK(uint32_t faultMask)
+ 579:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 424              		.loc 1 579 1
+ 425              		.cfi_startproc
+ 426              		@ args = 0, pretend = 0, frame = 8
+ 427              		@ frame_needed = 1, uses_anonymous_args = 0
+ 428              		@ link register save eliminated.
+ 429 0000 80B4     		push	{r7}
+ 430              	.LCFI30:
+ 431              		.cfi_def_cfa_offset 4
+ 432              		.cfi_offset 7, -4
+ 433 0002 83B0     		sub	sp, sp, #12
+ 434              	.LCFI31:
+ 435              		.cfi_def_cfa_offset 16
+ 436 0004 00AF     		add	r7, sp, #0
+ 437              	.LCFI32:
+ 438              		.cfi_def_cfa_register 7
+ 439 0006 7860     		str	r0, [r7, #4]
+ 580:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM volatile ("MSR faultmask, %0" : : "r" (faultMask) );
+ 440              		.loc 1 580 3
+ 441 0008 7B68     		ldr	r3, [r7, #4]
+ 442              		.syntax unified
+ 443              	@ 580 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+ 444 000a 83F31388 		MSR faultmask, r3
+ 445              	@ 0 "" 2
+ 581:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 446              		.loc 1 581 1
+ 447              		.thumb
+ 448              		.syntax unified
+ 449 000e 00BF     		nop
+ 450 0010 0C37     		adds	r7, r7, #12
+ 451              	.LCFI33:
+ 452              		.cfi_def_cfa_offset 4
+ 453 0012 BD46     		mov	sp, r7
+ 454              	.LCFI34:
+ 455              		.cfi_def_cfa_register 13
+ 456              		@ sp needed
+ 457 0014 80BC     		pop	{r7}
+ 458              	.LCFI35:
+ 459              		.cfi_restore 7
+ 460              		.cfi_def_cfa_offset 0
+ 461 0016 7047     		bx	lr
+ 462              		.cfi_endproc
+ 463              	.LFE9:
+ 465              		.section	.text.__get_CONTROL,"ax",%progbits
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 19
+
+
+ 466              		.align	1
+ 467              		.global	__get_CONTROL
+ 468              		.syntax unified
+ 469              		.thumb
+ 470              		.thumb_func
+ 471              		.fpu softvfp
+ 473              	__get_CONTROL:
+ 474              	.LFB10:
+ 582:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 583:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 584:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Return the Control Register value
+ 585:CMSIS/CM3/CoreSupport/core_cm3.c **** * 
+ 586:CMSIS/CM3/CoreSupport/core_cm3.c **** *  @return Control value
+ 587:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 588:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Return the content of the control register
+ 589:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 590:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __get_CONTROL(void)
+ 591:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 475              		.loc 1 591 1
+ 476              		.cfi_startproc
+ 477              		@ args = 0, pretend = 0, frame = 8
+ 478              		@ frame_needed = 1, uses_anonymous_args = 0
+ 479              		@ link register save eliminated.
+ 480 0000 80B4     		push	{r7}
+ 481              	.LCFI36:
+ 482              		.cfi_def_cfa_offset 4
+ 483              		.cfi_offset 7, -4
+ 484 0002 83B0     		sub	sp, sp, #12
+ 485              	.LCFI37:
+ 486              		.cfi_def_cfa_offset 16
+ 487 0004 00AF     		add	r7, sp, #0
+ 488              	.LCFI38:
+ 489              		.cfi_def_cfa_register 7
+ 592:CMSIS/CM3/CoreSupport/core_cm3.c ****   uint32_t result=0;
+ 490              		.loc 1 592 12
+ 491 0006 0023     		movs	r3, #0
+ 492 0008 7B60     		str	r3, [r7, #4]
+ 593:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 594:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM volatile ("MRS %0, control" : "=r" (result) );
+ 493              		.loc 1 594 3
+ 494              		.syntax unified
+ 495              	@ 594 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+ 496 000a EFF31483 		MRS r3, control
+ 497              	@ 0 "" 2
+ 498              		.thumb
+ 499              		.syntax unified
+ 500 000e 7B60     		str	r3, [r7, #4]
+ 595:CMSIS/CM3/CoreSupport/core_cm3.c ****   return(result);
+ 501              		.loc 1 595 9
+ 502 0010 7B68     		ldr	r3, [r7, #4]
+ 596:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 503              		.loc 1 596 1
+ 504 0012 1846     		mov	r0, r3
+ 505 0014 0C37     		adds	r7, r7, #12
+ 506              	.LCFI39:
+ 507              		.cfi_def_cfa_offset 4
+ 508 0016 BD46     		mov	sp, r7
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 20
+
+
+ 509              	.LCFI40:
+ 510              		.cfi_def_cfa_register 13
+ 511              		@ sp needed
+ 512 0018 80BC     		pop	{r7}
+ 513              	.LCFI41:
+ 514              		.cfi_restore 7
+ 515              		.cfi_def_cfa_offset 0
+ 516 001a 7047     		bx	lr
+ 517              		.cfi_endproc
+ 518              	.LFE10:
+ 520              		.section	.text.__set_CONTROL,"ax",%progbits
+ 521              		.align	1
+ 522              		.global	__set_CONTROL
+ 523              		.syntax unified
+ 524              		.thumb
+ 525              		.thumb_func
+ 526              		.fpu softvfp
+ 528              	__set_CONTROL:
+ 529              	.LFB11:
+ 597:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 598:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 599:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Set the Control Register value
+ 600:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 601:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  control  Control value
+ 602:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 603:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Set the control register
+ 604:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 605:CMSIS/CM3/CoreSupport/core_cm3.c **** void __set_CONTROL(uint32_t control)
+ 606:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 530              		.loc 1 606 1
+ 531              		.cfi_startproc
+ 532              		@ args = 0, pretend = 0, frame = 8
+ 533              		@ frame_needed = 1, uses_anonymous_args = 0
+ 534              		@ link register save eliminated.
+ 535 0000 80B4     		push	{r7}
+ 536              	.LCFI42:
+ 537              		.cfi_def_cfa_offset 4
+ 538              		.cfi_offset 7, -4
+ 539 0002 83B0     		sub	sp, sp, #12
+ 540              	.LCFI43:
+ 541              		.cfi_def_cfa_offset 16
+ 542 0004 00AF     		add	r7, sp, #0
+ 543              	.LCFI44:
+ 544              		.cfi_def_cfa_register 7
+ 545 0006 7860     		str	r0, [r7, #4]
+ 607:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM volatile ("MSR control, %0" : : "r" (control) );
+ 546              		.loc 1 607 3
+ 547 0008 7B68     		ldr	r3, [r7, #4]
+ 548              		.syntax unified
+ 549              	@ 607 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+ 550 000a 83F31488 		MSR control, r3
+ 551              	@ 0 "" 2
+ 608:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 552              		.loc 1 608 1
+ 553              		.thumb
+ 554              		.syntax unified
+ 555 000e 00BF     		nop
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 21
+
+
+ 556 0010 0C37     		adds	r7, r7, #12
+ 557              	.LCFI45:
+ 558              		.cfi_def_cfa_offset 4
+ 559 0012 BD46     		mov	sp, r7
+ 560              	.LCFI46:
+ 561              		.cfi_def_cfa_register 13
+ 562              		@ sp needed
+ 563 0014 80BC     		pop	{r7}
+ 564              	.LCFI47:
+ 565              		.cfi_restore 7
+ 566              		.cfi_def_cfa_offset 0
+ 567 0016 7047     		bx	lr
+ 568              		.cfi_endproc
+ 569              	.LFE11:
+ 571              		.section	.text.__REV,"ax",%progbits
+ 572              		.align	1
+ 573              		.global	__REV
+ 574              		.syntax unified
+ 575              		.thumb
+ 576              		.thumb_func
+ 577              		.fpu softvfp
+ 579              	__REV:
+ 580              	.LFB12:
+ 609:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 610:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 611:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 612:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Reverse byte order in integer value
+ 613:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 614:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  value  value to reverse
+ 615:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return        reversed value
+ 616:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 617:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Reverse byte order in integer value
+ 618:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 619:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __REV(uint32_t value)
+ 620:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 581              		.loc 1 620 1
+ 582              		.cfi_startproc
+ 583              		@ args = 0, pretend = 0, frame = 16
+ 584              		@ frame_needed = 1, uses_anonymous_args = 0
+ 585              		@ link register save eliminated.
+ 586 0000 80B4     		push	{r7}
+ 587              	.LCFI48:
+ 588              		.cfi_def_cfa_offset 4
+ 589              		.cfi_offset 7, -4
+ 590 0002 85B0     		sub	sp, sp, #20
+ 591              	.LCFI49:
+ 592              		.cfi_def_cfa_offset 24
+ 593 0004 00AF     		add	r7, sp, #0
+ 594              	.LCFI50:
+ 595              		.cfi_def_cfa_register 7
+ 596 0006 7860     		str	r0, [r7, #4]
+ 621:CMSIS/CM3/CoreSupport/core_cm3.c ****   uint32_t result=0;
+ 597              		.loc 1 621 12
+ 598 0008 0023     		movs	r3, #0
+ 599 000a FB60     		str	r3, [r7, #12]
+ 622:CMSIS/CM3/CoreSupport/core_cm3.c ****   
+ 623:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM volatile ("rev %0, %1" : "=r" (result) : "r" (value) );
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 22
+
+
+ 600              		.loc 1 623 3
+ 601 000c 7B68     		ldr	r3, [r7, #4]
+ 602              		.syntax unified
+ 603              	@ 623 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+ 604 000e 1BBA     		rev r3, r3
+ 605              	@ 0 "" 2
+ 606              		.thumb
+ 607              		.syntax unified
+ 608 0010 FB60     		str	r3, [r7, #12]
+ 624:CMSIS/CM3/CoreSupport/core_cm3.c ****   return(result);
+ 609              		.loc 1 624 9
+ 610 0012 FB68     		ldr	r3, [r7, #12]
+ 625:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 611              		.loc 1 625 1
+ 612 0014 1846     		mov	r0, r3
+ 613 0016 1437     		adds	r7, r7, #20
+ 614              	.LCFI51:
+ 615              		.cfi_def_cfa_offset 4
+ 616 0018 BD46     		mov	sp, r7
+ 617              	.LCFI52:
+ 618              		.cfi_def_cfa_register 13
+ 619              		@ sp needed
+ 620 001a 80BC     		pop	{r7}
+ 621              	.LCFI53:
+ 622              		.cfi_restore 7
+ 623              		.cfi_def_cfa_offset 0
+ 624 001c 7047     		bx	lr
+ 625              		.cfi_endproc
+ 626              	.LFE12:
+ 628              		.section	.text.__REV16,"ax",%progbits
+ 629              		.align	1
+ 630              		.global	__REV16
+ 631              		.syntax unified
+ 632              		.thumb
+ 633              		.thumb_func
+ 634              		.fpu softvfp
+ 636              	__REV16:
+ 637              	.LFB13:
+ 626:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 627:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 628:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Reverse byte order in unsigned short value
+ 629:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 630:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  value  value to reverse
+ 631:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return        reversed value
+ 632:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 633:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Reverse byte order in unsigned short value
+ 634:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 635:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __REV16(uint16_t value)
+ 636:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 638              		.loc 1 636 1
+ 639              		.cfi_startproc
+ 640              		@ args = 0, pretend = 0, frame = 16
+ 641              		@ frame_needed = 1, uses_anonymous_args = 0
+ 642              		@ link register save eliminated.
+ 643 0000 80B4     		push	{r7}
+ 644              	.LCFI54:
+ 645              		.cfi_def_cfa_offset 4
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 23
+
+
+ 646              		.cfi_offset 7, -4
+ 647 0002 85B0     		sub	sp, sp, #20
+ 648              	.LCFI55:
+ 649              		.cfi_def_cfa_offset 24
+ 650 0004 00AF     		add	r7, sp, #0
+ 651              	.LCFI56:
+ 652              		.cfi_def_cfa_register 7
+ 653 0006 0346     		mov	r3, r0
+ 654 0008 FB80     		strh	r3, [r7, #6]	@ movhi
+ 637:CMSIS/CM3/CoreSupport/core_cm3.c ****   uint32_t result=0;
+ 655              		.loc 1 637 12
+ 656 000a 0023     		movs	r3, #0
+ 657 000c FB60     		str	r3, [r7, #12]
+ 638:CMSIS/CM3/CoreSupport/core_cm3.c ****   
+ 639:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM volatile ("rev16 %0, %1" : "=r" (result) : "r" (value) );
+ 658              		.loc 1 639 3
+ 659 000e FB88     		ldrh	r3, [r7, #6]	@ movhi
+ 660              		.syntax unified
+ 661              	@ 639 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+ 662 0010 5BBA     		rev16 r3, r3
+ 663              	@ 0 "" 2
+ 664              		.thumb
+ 665              		.syntax unified
+ 666 0012 FB60     		str	r3, [r7, #12]
+ 640:CMSIS/CM3/CoreSupport/core_cm3.c ****   return(result);
+ 667              		.loc 1 640 9
+ 668 0014 FB68     		ldr	r3, [r7, #12]
+ 641:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 669              		.loc 1 641 1
+ 670 0016 1846     		mov	r0, r3
+ 671 0018 1437     		adds	r7, r7, #20
+ 672              	.LCFI57:
+ 673              		.cfi_def_cfa_offset 4
+ 674 001a BD46     		mov	sp, r7
+ 675              	.LCFI58:
+ 676              		.cfi_def_cfa_register 13
+ 677              		@ sp needed
+ 678 001c 80BC     		pop	{r7}
+ 679              	.LCFI59:
+ 680              		.cfi_restore 7
+ 681              		.cfi_def_cfa_offset 0
+ 682 001e 7047     		bx	lr
+ 683              		.cfi_endproc
+ 684              	.LFE13:
+ 686              		.section	.text.__REVSH,"ax",%progbits
+ 687              		.align	1
+ 688              		.global	__REVSH
+ 689              		.syntax unified
+ 690              		.thumb
+ 691              		.thumb_func
+ 692              		.fpu softvfp
+ 694              	__REVSH:
+ 695              	.LFB14:
+ 642:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 643:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 644:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Reverse byte order in signed short value with sign extension to integer
+ 645:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 24
+
+
+ 646:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  value  value to reverse
+ 647:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return        reversed value
+ 648:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 649:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Reverse byte order in signed short value with sign extension to integer
+ 650:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 651:CMSIS/CM3/CoreSupport/core_cm3.c **** int32_t __REVSH(int16_t value)
+ 652:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 696              		.loc 1 652 1
+ 697              		.cfi_startproc
+ 698              		@ args = 0, pretend = 0, frame = 16
+ 699              		@ frame_needed = 1, uses_anonymous_args = 0
+ 700              		@ link register save eliminated.
+ 701 0000 80B4     		push	{r7}
+ 702              	.LCFI60:
+ 703              		.cfi_def_cfa_offset 4
+ 704              		.cfi_offset 7, -4
+ 705 0002 85B0     		sub	sp, sp, #20
+ 706              	.LCFI61:
+ 707              		.cfi_def_cfa_offset 24
+ 708 0004 00AF     		add	r7, sp, #0
+ 709              	.LCFI62:
+ 710              		.cfi_def_cfa_register 7
+ 711 0006 0346     		mov	r3, r0
+ 712 0008 FB80     		strh	r3, [r7, #6]	@ movhi
+ 653:CMSIS/CM3/CoreSupport/core_cm3.c ****   uint32_t result=0;
+ 713              		.loc 1 653 12
+ 714 000a 0023     		movs	r3, #0
+ 715 000c FB60     		str	r3, [r7, #12]
+ 654:CMSIS/CM3/CoreSupport/core_cm3.c ****   
+ 655:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM volatile ("revsh %0, %1" : "=r" (result) : "r" (value) );
+ 716              		.loc 1 655 3
+ 717 000e FB88     		ldrh	r3, [r7, #6]	@ movhi
+ 718              		.syntax unified
+ 719              	@ 655 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+ 720 0010 DBBA     		revsh r3, r3
+ 721              	@ 0 "" 2
+ 722              		.thumb
+ 723              		.syntax unified
+ 724 0012 FB60     		str	r3, [r7, #12]
+ 656:CMSIS/CM3/CoreSupport/core_cm3.c ****   return(result);
+ 725              		.loc 1 656 9
+ 726 0014 FB68     		ldr	r3, [r7, #12]
+ 657:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 727              		.loc 1 657 1
+ 728 0016 1846     		mov	r0, r3
+ 729 0018 1437     		adds	r7, r7, #20
+ 730              	.LCFI63:
+ 731              		.cfi_def_cfa_offset 4
+ 732 001a BD46     		mov	sp, r7
+ 733              	.LCFI64:
+ 734              		.cfi_def_cfa_register 13
+ 735              		@ sp needed
+ 736 001c 80BC     		pop	{r7}
+ 737              	.LCFI65:
+ 738              		.cfi_restore 7
+ 739              		.cfi_def_cfa_offset 0
+ 740 001e 7047     		bx	lr
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 25
+
+
+ 741              		.cfi_endproc
+ 742              	.LFE14:
+ 744              		.section	.text.__RBIT,"ax",%progbits
+ 745              		.align	1
+ 746              		.global	__RBIT
+ 747              		.syntax unified
+ 748              		.thumb
+ 749              		.thumb_func
+ 750              		.fpu softvfp
+ 752              	__RBIT:
+ 753              	.LFB15:
+ 658:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 659:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 660:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  Reverse bit order of value
+ 661:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 662:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  value  value to reverse
+ 663:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return        reversed value
+ 664:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 665:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Reverse bit order of value
+ 666:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 667:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __RBIT(uint32_t value)
+ 668:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 754              		.loc 1 668 1
+ 755              		.cfi_startproc
+ 756              		@ args = 0, pretend = 0, frame = 16
+ 757              		@ frame_needed = 1, uses_anonymous_args = 0
+ 758              		@ link register save eliminated.
+ 759 0000 80B4     		push	{r7}
+ 760              	.LCFI66:
+ 761              		.cfi_def_cfa_offset 4
+ 762              		.cfi_offset 7, -4
+ 763 0002 85B0     		sub	sp, sp, #20
+ 764              	.LCFI67:
+ 765              		.cfi_def_cfa_offset 24
+ 766 0004 00AF     		add	r7, sp, #0
+ 767              	.LCFI68:
+ 768              		.cfi_def_cfa_register 7
+ 769 0006 7860     		str	r0, [r7, #4]
+ 669:CMSIS/CM3/CoreSupport/core_cm3.c ****   uint32_t result=0;
+ 770              		.loc 1 669 12
+ 771 0008 0023     		movs	r3, #0
+ 772 000a FB60     		str	r3, [r7, #12]
+ 670:CMSIS/CM3/CoreSupport/core_cm3.c ****   
+ 671:CMSIS/CM3/CoreSupport/core_cm3.c ****    __ASM volatile ("rbit %0, %1" : "=r" (result) : "r" (value) );
+ 773              		.loc 1 671 4
+ 774 000c 7B68     		ldr	r3, [r7, #4]
+ 775              		.syntax unified
+ 776              	@ 671 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+ 777 000e 93FAA3F3 		rbit r3, r3
+ 778              	@ 0 "" 2
+ 779              		.thumb
+ 780              		.syntax unified
+ 781 0012 FB60     		str	r3, [r7, #12]
+ 672:CMSIS/CM3/CoreSupport/core_cm3.c ****    return(result);
+ 782              		.loc 1 672 10
+ 783 0014 FB68     		ldr	r3, [r7, #12]
+ 673:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 26
+
+
+ 784              		.loc 1 673 1
+ 785 0016 1846     		mov	r0, r3
+ 786 0018 1437     		adds	r7, r7, #20
+ 787              	.LCFI69:
+ 788              		.cfi_def_cfa_offset 4
+ 789 001a BD46     		mov	sp, r7
+ 790              	.LCFI70:
+ 791              		.cfi_def_cfa_register 13
+ 792              		@ sp needed
+ 793 001c 80BC     		pop	{r7}
+ 794              	.LCFI71:
+ 795              		.cfi_restore 7
+ 796              		.cfi_def_cfa_offset 0
+ 797 001e 7047     		bx	lr
+ 798              		.cfi_endproc
+ 799              	.LFE15:
+ 801              		.section	.text.__LDREXB,"ax",%progbits
+ 802              		.align	1
+ 803              		.global	__LDREXB
+ 804              		.syntax unified
+ 805              		.thumb
+ 806              		.thumb_func
+ 807              		.fpu softvfp
+ 809              	__LDREXB:
+ 810              	.LFB16:
+ 674:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 675:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 676:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  LDR Exclusive (8 bit)
+ 677:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 678:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  *addr  address pointer
+ 679:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return        value of (*address)
+ 680:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 681:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Exclusive LDR command for 8 bit value
+ 682:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 683:CMSIS/CM3/CoreSupport/core_cm3.c **** uint8_t __LDREXB(uint8_t *addr)
+ 684:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 811              		.loc 1 684 1
+ 812              		.cfi_startproc
+ 813              		@ args = 0, pretend = 0, frame = 16
+ 814              		@ frame_needed = 1, uses_anonymous_args = 0
+ 815              		@ link register save eliminated.
+ 816 0000 80B4     		push	{r7}
+ 817              	.LCFI72:
+ 818              		.cfi_def_cfa_offset 4
+ 819              		.cfi_offset 7, -4
+ 820 0002 85B0     		sub	sp, sp, #20
+ 821              	.LCFI73:
+ 822              		.cfi_def_cfa_offset 24
+ 823 0004 00AF     		add	r7, sp, #0
+ 824              	.LCFI74:
+ 825              		.cfi_def_cfa_register 7
+ 826 0006 7860     		str	r0, [r7, #4]
+ 685:CMSIS/CM3/CoreSupport/core_cm3.c ****     uint8_t result=0;
+ 827              		.loc 1 685 13
+ 828 0008 0023     		movs	r3, #0
+ 829 000a FB73     		strb	r3, [r7, #15]
+ 686:CMSIS/CM3/CoreSupport/core_cm3.c ****   
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 27
+
+
+ 687:CMSIS/CM3/CoreSupport/core_cm3.c ****    __ASM volatile ("ldrexb %0, [%1]" : "=r" (result) : "r" (addr) );
+ 830              		.loc 1 687 4
+ 831 000c 7B68     		ldr	r3, [r7, #4]
+ 832              		.syntax unified
+ 833              	@ 687 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+ 834 000e D3E84F3F 		ldrexb r3, [r3]
+ 835              	@ 0 "" 2
+ 836              		.thumb
+ 837              		.syntax unified
+ 838 0012 FB73     		strb	r3, [r7, #15]
+ 688:CMSIS/CM3/CoreSupport/core_cm3.c ****    return(result);
+ 839              		.loc 1 688 10
+ 840 0014 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 689:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 841              		.loc 1 689 1
+ 842 0016 1846     		mov	r0, r3
+ 843 0018 1437     		adds	r7, r7, #20
+ 844              	.LCFI75:
+ 845              		.cfi_def_cfa_offset 4
+ 846 001a BD46     		mov	sp, r7
+ 847              	.LCFI76:
+ 848              		.cfi_def_cfa_register 13
+ 849              		@ sp needed
+ 850 001c 80BC     		pop	{r7}
+ 851              	.LCFI77:
+ 852              		.cfi_restore 7
+ 853              		.cfi_def_cfa_offset 0
+ 854 001e 7047     		bx	lr
+ 855              		.cfi_endproc
+ 856              	.LFE16:
+ 858              		.section	.text.__LDREXH,"ax",%progbits
+ 859              		.align	1
+ 860              		.global	__LDREXH
+ 861              		.syntax unified
+ 862              		.thumb
+ 863              		.thumb_func
+ 864              		.fpu softvfp
+ 866              	__LDREXH:
+ 867              	.LFB17:
+ 690:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 691:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 692:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  LDR Exclusive (16 bit)
+ 693:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 694:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  *addr  address pointer
+ 695:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return        value of (*address)
+ 696:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 697:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Exclusive LDR command for 16 bit values
+ 698:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 699:CMSIS/CM3/CoreSupport/core_cm3.c **** uint16_t __LDREXH(uint16_t *addr)
+ 700:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 868              		.loc 1 700 1
+ 869              		.cfi_startproc
+ 870              		@ args = 0, pretend = 0, frame = 16
+ 871              		@ frame_needed = 1, uses_anonymous_args = 0
+ 872              		@ link register save eliminated.
+ 873 0000 80B4     		push	{r7}
+ 874              	.LCFI78:
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 28
+
+
+ 875              		.cfi_def_cfa_offset 4
+ 876              		.cfi_offset 7, -4
+ 877 0002 85B0     		sub	sp, sp, #20
+ 878              	.LCFI79:
+ 879              		.cfi_def_cfa_offset 24
+ 880 0004 00AF     		add	r7, sp, #0
+ 881              	.LCFI80:
+ 882              		.cfi_def_cfa_register 7
+ 883 0006 7860     		str	r0, [r7, #4]
+ 701:CMSIS/CM3/CoreSupport/core_cm3.c ****     uint16_t result=0;
+ 884              		.loc 1 701 14
+ 885 0008 0023     		movs	r3, #0
+ 886 000a FB81     		strh	r3, [r7, #14]	@ movhi
+ 702:CMSIS/CM3/CoreSupport/core_cm3.c ****   
+ 703:CMSIS/CM3/CoreSupport/core_cm3.c ****    __ASM volatile ("ldrexh %0, [%1]" : "=r" (result) : "r" (addr) );
+ 887              		.loc 1 703 4
+ 888 000c 7B68     		ldr	r3, [r7, #4]
+ 889              		.syntax unified
+ 890              	@ 703 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+ 891 000e D3E85F3F 		ldrexh r3, [r3]
+ 892              	@ 0 "" 2
+ 893              		.thumb
+ 894              		.syntax unified
+ 895 0012 FB81     		strh	r3, [r7, #14]	@ movhi
+ 704:CMSIS/CM3/CoreSupport/core_cm3.c ****    return(result);
+ 896              		.loc 1 704 10
+ 897 0014 FB89     		ldrh	r3, [r7, #14]
+ 705:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 898              		.loc 1 705 1
+ 899 0016 1846     		mov	r0, r3
+ 900 0018 1437     		adds	r7, r7, #20
+ 901              	.LCFI81:
+ 902              		.cfi_def_cfa_offset 4
+ 903 001a BD46     		mov	sp, r7
+ 904              	.LCFI82:
+ 905              		.cfi_def_cfa_register 13
+ 906              		@ sp needed
+ 907 001c 80BC     		pop	{r7}
+ 908              	.LCFI83:
+ 909              		.cfi_restore 7
+ 910              		.cfi_def_cfa_offset 0
+ 911 001e 7047     		bx	lr
+ 912              		.cfi_endproc
+ 913              	.LFE17:
+ 915              		.section	.text.__LDREXW,"ax",%progbits
+ 916              		.align	1
+ 917              		.global	__LDREXW
+ 918              		.syntax unified
+ 919              		.thumb
+ 920              		.thumb_func
+ 921              		.fpu softvfp
+ 923              	__LDREXW:
+ 924              	.LFB18:
+ 706:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 707:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 708:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  LDR Exclusive (32 bit)
+ 709:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 29
+
+
+ 710:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  *addr  address pointer
+ 711:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return        value of (*address)
+ 712:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 713:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Exclusive LDR command for 32 bit values
+ 714:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 715:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __LDREXW(uint32_t *addr)
+ 716:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 925              		.loc 1 716 1
+ 926              		.cfi_startproc
+ 927              		@ args = 0, pretend = 0, frame = 16
+ 928              		@ frame_needed = 1, uses_anonymous_args = 0
+ 929              		@ link register save eliminated.
+ 930 0000 80B4     		push	{r7}
+ 931              	.LCFI84:
+ 932              		.cfi_def_cfa_offset 4
+ 933              		.cfi_offset 7, -4
+ 934 0002 85B0     		sub	sp, sp, #20
+ 935              	.LCFI85:
+ 936              		.cfi_def_cfa_offset 24
+ 937 0004 00AF     		add	r7, sp, #0
+ 938              	.LCFI86:
+ 939              		.cfi_def_cfa_register 7
+ 940 0006 7860     		str	r0, [r7, #4]
+ 717:CMSIS/CM3/CoreSupport/core_cm3.c ****     uint32_t result=0;
+ 941              		.loc 1 717 14
+ 942 0008 0023     		movs	r3, #0
+ 943 000a FB60     		str	r3, [r7, #12]
+ 718:CMSIS/CM3/CoreSupport/core_cm3.c ****   
+ 719:CMSIS/CM3/CoreSupport/core_cm3.c ****    __ASM volatile ("ldrex %0, [%1]" : "=r" (result) : "r" (addr) );
+ 944              		.loc 1 719 4
+ 945 000c 7B68     		ldr	r3, [r7, #4]
+ 946              		.syntax unified
+ 947              	@ 719 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+ 948 000e 53E8003F 		ldrex r3, [r3]
+ 949              	@ 0 "" 2
+ 950              		.thumb
+ 951              		.syntax unified
+ 952 0012 FB60     		str	r3, [r7, #12]
+ 720:CMSIS/CM3/CoreSupport/core_cm3.c ****    return(result);
+ 953              		.loc 1 720 10
+ 954 0014 FB68     		ldr	r3, [r7, #12]
+ 721:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 955              		.loc 1 721 1
+ 956 0016 1846     		mov	r0, r3
+ 957 0018 1437     		adds	r7, r7, #20
+ 958              	.LCFI87:
+ 959              		.cfi_def_cfa_offset 4
+ 960 001a BD46     		mov	sp, r7
+ 961              	.LCFI88:
+ 962              		.cfi_def_cfa_register 13
+ 963              		@ sp needed
+ 964 001c 80BC     		pop	{r7}
+ 965              	.LCFI89:
+ 966              		.cfi_restore 7
+ 967              		.cfi_def_cfa_offset 0
+ 968 001e 7047     		bx	lr
+ 969              		.cfi_endproc
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 30
+
+
+ 970              	.LFE18:
+ 972              		.section	.text.__STREXB,"ax",%progbits
+ 973              		.align	1
+ 974              		.global	__STREXB
+ 975              		.syntax unified
+ 976              		.thumb
+ 977              		.thumb_func
+ 978              		.fpu softvfp
+ 980              	__STREXB:
+ 981              	.LFB19:
+ 722:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 723:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 724:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  STR Exclusive (8 bit)
+ 725:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 726:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  value  value to store
+ 727:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  *addr  address pointer
+ 728:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return        successful / failed
+ 729:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 730:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Exclusive STR command for 8 bit values
+ 731:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 732:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __STREXB(uint8_t value, uint8_t *addr)
+ 733:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 982              		.loc 1 733 1
+ 983              		.cfi_startproc
+ 984              		@ args = 0, pretend = 0, frame = 8
+ 985              		@ frame_needed = 1, uses_anonymous_args = 0
+ 986              		@ link register save eliminated.
+ 987 0000 80B4     		push	{r7}
+ 988              	.LCFI90:
+ 989              		.cfi_def_cfa_offset 4
+ 990              		.cfi_offset 7, -4
+ 991 0002 83B0     		sub	sp, sp, #12
+ 992              	.LCFI91:
+ 993              		.cfi_def_cfa_offset 16
+ 994 0004 00AF     		add	r7, sp, #0
+ 995              	.LCFI92:
+ 996              		.cfi_def_cfa_register 7
+ 997 0006 0346     		mov	r3, r0
+ 998 0008 3960     		str	r1, [r7]
+ 999 000a FB71     		strb	r3, [r7, #7]
+ 734:CMSIS/CM3/CoreSupport/core_cm3.c ****    //uint32_t result=0;
+ 735:CMSIS/CM3/CoreSupport/core_cm3.c ****   register uint32_t result asm ("r2");
+ 736:CMSIS/CM3/CoreSupport/core_cm3.c ****    //__ASM volatile ("strexb %0, %2, [%1]" : "=r" (result) : "r" (addr), "r" (value) );//修改了�
+ 737:CMSIS/CM3/CoreSupport/core_cm3.c ****    __ASM volatile ("strexb %0, %2, [%1]" : "=&r" (result) : "r" (addr), "r" (value) );
+ 1000              		.loc 1 737 4
+ 1001 000c 3B68     		ldr	r3, [r7]
+ 1002 000e FA79     		ldrb	r2, [r7, #7]
+ 1003 0010 1146     		mov	r1, r2
+ 1004              		.syntax unified
+ 1005              	@ 737 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+ 1006 0012 C3E8421F 		strexb r2, r1, [r3]
+ 1007              	@ 0 "" 2
+ 738:CMSIS/CM3/CoreSupport/core_cm3.c ****    return(result);
+ 1008              		.loc 1 738 10
+ 1009              		.thumb
+ 1010              		.syntax unified
+ 1011 0016 1346     		mov	r3, r2
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 31
+
+
+ 739:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 1012              		.loc 1 739 1
+ 1013 0018 1846     		mov	r0, r3
+ 1014 001a 0C37     		adds	r7, r7, #12
+ 1015              	.LCFI93:
+ 1016              		.cfi_def_cfa_offset 4
+ 1017 001c BD46     		mov	sp, r7
+ 1018              	.LCFI94:
+ 1019              		.cfi_def_cfa_register 13
+ 1020              		@ sp needed
+ 1021 001e 80BC     		pop	{r7}
+ 1022              	.LCFI95:
+ 1023              		.cfi_restore 7
+ 1024              		.cfi_def_cfa_offset 0
+ 1025 0020 7047     		bx	lr
+ 1026              		.cfi_endproc
+ 1027              	.LFE19:
+ 1029              		.section	.text.__STREXH,"ax",%progbits
+ 1030              		.align	1
+ 1031              		.global	__STREXH
+ 1032              		.syntax unified
+ 1033              		.thumb
+ 1034              		.thumb_func
+ 1035              		.fpu softvfp
+ 1037              	__STREXH:
+ 1038              	.LFB20:
+ 740:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 741:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 742:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  STR Exclusive (16 bit)
+ 743:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 744:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  value  value to store
+ 745:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  *addr  address pointer
+ 746:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return        successful / failed
+ 747:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 748:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Exclusive STR command for 16 bit values
+ 749:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 750:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __STREXH(uint16_t value, uint16_t *addr)
+ 751:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 1039              		.loc 1 751 1
+ 1040              		.cfi_startproc
+ 1041              		@ args = 0, pretend = 0, frame = 8
+ 1042              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1043              		@ link register save eliminated.
+ 1044 0000 80B4     		push	{r7}
+ 1045              	.LCFI96:
+ 1046              		.cfi_def_cfa_offset 4
+ 1047              		.cfi_offset 7, -4
+ 1048 0002 83B0     		sub	sp, sp, #12
+ 1049              	.LCFI97:
+ 1050              		.cfi_def_cfa_offset 16
+ 1051 0004 00AF     		add	r7, sp, #0
+ 1052              	.LCFI98:
+ 1053              		.cfi_def_cfa_register 7
+ 1054 0006 0346     		mov	r3, r0
+ 1055 0008 3960     		str	r1, [r7]
+ 1056 000a FB80     		strh	r3, [r7, #6]	@ movhi
+ 752:CMSIS/CM3/CoreSupport/core_cm3.c ****    //uint32_t result=0;
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 32
+
+
+ 753:CMSIS/CM3/CoreSupport/core_cm3.c ****   register uint32_t result asm ("r2");
+ 754:CMSIS/CM3/CoreSupport/core_cm3.c ****   // __ASM volatile ("strexh %0, %2, [%1]" : "=r" (result) : "r" (addr), "r" (value) );//修改了�
+ 755:CMSIS/CM3/CoreSupport/core_cm3.c ****   __ASM volatile ("strexh %0, %2, [%1]" : "=&r" (result) : "r" (addr), "r" (value) );
+ 1057              		.loc 1 755 3
+ 1058 000c 3B68     		ldr	r3, [r7]
+ 1059 000e FA88     		ldrh	r2, [r7, #6]	@ movhi
+ 1060 0010 1146     		mov	r1, r2	@ movhi
+ 1061              		.syntax unified
+ 1062              	@ 755 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+ 1063 0012 C3E8521F 		strexh r2, r1, [r3]
+ 1064              	@ 0 "" 2
+ 756:CMSIS/CM3/CoreSupport/core_cm3.c ****    return(result);
+ 1065              		.loc 1 756 10
+ 1066              		.thumb
+ 1067              		.syntax unified
+ 1068 0016 1346     		mov	r3, r2
+ 757:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 1069              		.loc 1 757 1
+ 1070 0018 1846     		mov	r0, r3
+ 1071 001a 0C37     		adds	r7, r7, #12
+ 1072              	.LCFI99:
+ 1073              		.cfi_def_cfa_offset 4
+ 1074 001c BD46     		mov	sp, r7
+ 1075              	.LCFI100:
+ 1076              		.cfi_def_cfa_register 13
+ 1077              		@ sp needed
+ 1078 001e 80BC     		pop	{r7}
+ 1079              	.LCFI101:
+ 1080              		.cfi_restore 7
+ 1081              		.cfi_def_cfa_offset 0
+ 1082 0020 7047     		bx	lr
+ 1083              		.cfi_endproc
+ 1084              	.LFE20:
+ 1086              		.section	.text.__STREXW,"ax",%progbits
+ 1087              		.align	1
+ 1088              		.global	__STREXW
+ 1089              		.syntax unified
+ 1090              		.thumb
+ 1091              		.thumb_func
+ 1092              		.fpu softvfp
+ 1094              	__STREXW:
+ 1095              	.LFB21:
+ 758:CMSIS/CM3/CoreSupport/core_cm3.c **** 
+ 759:CMSIS/CM3/CoreSupport/core_cm3.c **** /**
+ 760:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @brief  STR Exclusive (32 bit)
+ 761:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 762:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  value  value to store
+ 763:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @param  *addr  address pointer
+ 764:CMSIS/CM3/CoreSupport/core_cm3.c ****  * @return        successful / failed
+ 765:CMSIS/CM3/CoreSupport/core_cm3.c ****  *
+ 766:CMSIS/CM3/CoreSupport/core_cm3.c ****  * Exclusive STR command for 32 bit values
+ 767:CMSIS/CM3/CoreSupport/core_cm3.c ****  */
+ 768:CMSIS/CM3/CoreSupport/core_cm3.c **** uint32_t __STREXW(uint32_t value, uint32_t *addr)
+ 769:CMSIS/CM3/CoreSupport/core_cm3.c **** {
+ 1096              		.loc 1 769 1
+ 1097              		.cfi_startproc
+ 1098              		@ args = 0, pretend = 0, frame = 16
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 33
+
+
+ 1099              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1100              		@ link register save eliminated.
+ 1101 0000 80B4     		push	{r7}
+ 1102              	.LCFI102:
+ 1103              		.cfi_def_cfa_offset 4
+ 1104              		.cfi_offset 7, -4
+ 1105 0002 85B0     		sub	sp, sp, #20
+ 1106              	.LCFI103:
+ 1107              		.cfi_def_cfa_offset 24
+ 1108 0004 00AF     		add	r7, sp, #0
+ 1109              	.LCFI104:
+ 1110              		.cfi_def_cfa_register 7
+ 1111 0006 7860     		str	r0, [r7, #4]
+ 1112 0008 3960     		str	r1, [r7]
+ 770:CMSIS/CM3/CoreSupport/core_cm3.c ****    uint32_t result=0;
+ 1113              		.loc 1 770 13
+ 1114 000a 0023     		movs	r3, #0
+ 1115 000c FB60     		str	r3, [r7, #12]
+ 771:CMSIS/CM3/CoreSupport/core_cm3.c ****   
+ 772:CMSIS/CM3/CoreSupport/core_cm3.c ****    __ASM volatile ("strex %0, %2, [%1]" : "=r" (result) : "r" (addr), "r" (value) );
+ 1116              		.loc 1 772 4
+ 1117 000e 3B68     		ldr	r3, [r7]
+ 1118 0010 7A68     		ldr	r2, [r7, #4]
+ 1119              		.syntax unified
+ 1120              	@ 772 "CMSIS/CM3/CoreSupport/core_cm3.c" 1
+ 1121 0012 43E80023 		strex r3, r2, [r3]
+ 1122              	@ 0 "" 2
+ 1123              		.thumb
+ 1124              		.syntax unified
+ 1125 0016 FB60     		str	r3, [r7, #12]
+ 773:CMSIS/CM3/CoreSupport/core_cm3.c ****    return(result);
+ 1126              		.loc 1 773 10
+ 1127 0018 FB68     		ldr	r3, [r7, #12]
+ 774:CMSIS/CM3/CoreSupport/core_cm3.c **** }
+ 1128              		.loc 1 774 1
+ 1129 001a 1846     		mov	r0, r3
+ 1130 001c 1437     		adds	r7, r7, #20
+ 1131              	.LCFI105:
+ 1132              		.cfi_def_cfa_offset 4
+ 1133 001e BD46     		mov	sp, r7
+ 1134              	.LCFI106:
+ 1135              		.cfi_def_cfa_register 13
+ 1136              		@ sp needed
+ 1137 0020 80BC     		pop	{r7}
+ 1138              	.LCFI107:
+ 1139              		.cfi_restore 7
+ 1140              		.cfi_def_cfa_offset 0
+ 1141 0022 7047     		bx	lr
+ 1142              		.cfi_endproc
+ 1143              	.LFE21:
+ 1145              		.text
+ 1146              	.Letext0:
+ 1147              		.file 2 "d:\\program files (x86)\\gnu arm embedded toolchain\\9 2020-q2-update\\arm-none-eabi\\inc
+ 1148              		.file 3 "d:\\program files (x86)\\gnu arm embedded toolchain\\9 2020-q2-update\\arm-none-eabi\\inc
+ARM GAS  C:\Users\no\AppData\Local\Temp\cc5BUJyY.s 			page 34
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 core_cm3.c
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:16     .text.__get_PSP:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:24     .text.__get_PSP:00000000 __get_PSP
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:53     .text.__set_PSP:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:60     .text.__set_PSP:00000000 __set_PSP
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:83     .text.__get_MSP:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:90     .text.__get_MSP:00000000 __get_MSP
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:118    .text.__set_MSP:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:125    .text.__set_MSP:00000000 __set_MSP
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:148    .text.__get_BASEPRI:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:155    .text.__get_BASEPRI:00000000 __get_BASEPRI
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:203    .text.__set_BASEPRI:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:210    .text.__set_BASEPRI:00000000 __set_BASEPRI
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:254    .text.__get_PRIMASK:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:261    .text.__get_PRIMASK:00000000 __get_PRIMASK
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:309    .text.__set_PRIMASK:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:316    .text.__set_PRIMASK:00000000 __set_PRIMASK
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:360    .text.__get_FAULTMASK:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:367    .text.__get_FAULTMASK:00000000 __get_FAULTMASK
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:415    .text.__set_FAULTMASK:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:422    .text.__set_FAULTMASK:00000000 __set_FAULTMASK
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:466    .text.__get_CONTROL:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:473    .text.__get_CONTROL:00000000 __get_CONTROL
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:521    .text.__set_CONTROL:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:528    .text.__set_CONTROL:00000000 __set_CONTROL
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:572    .text.__REV:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:579    .text.__REV:00000000 __REV
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:629    .text.__REV16:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:636    .text.__REV16:00000000 __REV16
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:687    .text.__REVSH:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:694    .text.__REVSH:00000000 __REVSH
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:745    .text.__RBIT:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:752    .text.__RBIT:00000000 __RBIT
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:802    .text.__LDREXB:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:809    .text.__LDREXB:00000000 __LDREXB
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:859    .text.__LDREXH:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:866    .text.__LDREXH:00000000 __LDREXH
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:916    .text.__LDREXW:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:923    .text.__LDREXW:00000000 __LDREXW
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:973    .text.__STREXB:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:980    .text.__STREXB:00000000 __STREXB
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:1030   .text.__STREXH:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:1037   .text.__STREXH:00000000 __STREXH
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:1087   .text.__STREXW:00000000 $t
+C:\Users\no\AppData\Local\Temp\cc5BUJyY.s:1094   .text.__STREXW:00000000 __STREXW
+
+NO UNDEFINED SYMBOLS

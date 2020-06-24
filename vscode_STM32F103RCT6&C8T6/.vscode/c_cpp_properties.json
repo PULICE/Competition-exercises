@@ -1,0 +1,26 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/CMSIS/CM3/DeviceSupport/ST/STM32F10x/*",
+                "${workspaceFolder}/Libraries/armcc_include/**",
+                "${workspaceFolder}/Libraries/inc/*",
+                "${workspaceFolder}/CMSIS/CM3/CoreSupport/*",
+                "${workspaceFolder}/User/*",
+                "${workspaceFolder}/UserLibaries/bspinc/*"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+
+            ],
+            "cStandard": "c11",
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "D:/Program Files (x86)/GNU Arm Embedded Toolchain/9 2020-q2-update/bin/arm-none-eabi-gcc.exe",
+            "cppStandard": "c++98"
+        }
+    ],
+    "version": 4
+}
