@@ -5,6 +5,7 @@
 int main()
 {	
 	IWDG_Config(IWDG_Prescaler_64 ,2000);//原值625
+	
 	/* 检查是否为独立看门狗复位 */
   if (RCC_GetFlagStatus(RCC_FLAG_IWDGRST) != RESET)
   {
@@ -19,6 +20,8 @@ int main()
 	PWM_IO_Config();
 	/*综合应用程序,内部是一个非常大的死循环*/
 	application();
+while(1);
+
 }
 
 

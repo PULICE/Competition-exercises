@@ -3,6 +3,7 @@
 #include "oled.h"
 #include "bmp.h"
 
+#define PWM_DELAY 1800
 uint8_t rxBuf[64];
 __IO int cnt = 0;
 __IO  uint8_t idle = 0;//1:串口空闲
@@ -22,7 +23,7 @@ uint8_t card4[] = {0Xab,0X5d,0Xf6,0X20,0Xb0};
 uint8_t card5[] = {0X7d,0Xad,0X55,0X19,0X36};
 uint8_t card6[] = {0X87,0X7f,0X47,0X3b,0X46};
 uint8_t *pn532List[] = {card1,card2,card3,card4,card5,card6};//卡ID容器列表
-
+//72 000 000  //8 000 000
 /*内存拷贝*/
 void mcpy(uint8_t* target,uint8_t* src,int len)
 {
@@ -93,8 +94,10 @@ void application (void)
 	unsigned char pn532_bfuf[24] = {0};
 	OLED_Init();			       //初始化OLED  
 	OLED_Clear();
+
 	while(1)
 	{
+
 		do{
 				IWDG_Feed();//喂狗函数
 				Usart2_sendBuf(data1,sizeof(data1));//发送唤醒命令
@@ -102,10 +105,12 @@ void application (void)
 			  Usart2_sendBuf(data2,sizeof(data2));//发送读卡命令
 				readData(pn532_bfuf,&readlen);//等待接收IC卡数据	
 			  readData(pn532_bfuf,&readlen);//等待接收数据，因为在接收数据哪里存在一个idle,所以如果没有数据，会卡在哪里
+			//printf("working:  %d\n\r",readlen);
 		}while(readlen<18);//如果唤醒命令发送成功会接收到从机的返回值，虽然可以不要这个while但是为了区分唤醒和读卡，还是有必要这样写
 	//因为在数据长度等于19时接收到的才是卡片ID数据，所以while判断里面是19，不是计算出来的，是通过串口调试所以数据可能并不准确不过目前测试没有任何问题
 		printf("working%d\n\r",readlen);
 //		/*显示UID*/
+
 		for(i=13;i<readlen-1;i++)//显示接收数据
 		{
 			printf("%x  ",pn532_bfuf[i]);
@@ -122,18 +127,18 @@ void application (void)
 							//OLED_Clear();
 							//OLED_ShowString(12,0,(uint8_t*)"Jurisdiction   Administrator",100);//输出第几张卡B12
 							TIM_Config(500);
-							delay_ms(1000);
+							delay_ms(PWM_DELAY);
 							TIM_Config(1500);
-							delay_ms(1000);
+							delay_ms(PWM_DELAY);
 
 							break;
 							case 1:
 							OLED_Clear();
 							OLED_ShowString(12,0,(uint8_t*)"Jurisdiction  Temporary member",100);//输出第几张卡
 							TIM_Config(500);
-							delay_ms(1000);
+							delay_ms(PWM_DELAY);
 							TIM_Config(1500);
-							delay_ms(1000);
+							delay_ms(PWM_DELAY);
 							break;
 //							case 2:
 //							OLED_Clear();
@@ -147,33 +152,33 @@ void application (void)
 							OLED_Clear();
 							OLED_ShowString(12,0,(uint8_t*)"Jurisdiction   wang Jian",100);//输出第几张卡
 							TIM_Config(500);
-							delay_ms(1000);
+							delay_ms(PWM_DELAY);
 							TIM_Config(1500);
-							delay_ms(1000);
+							delay_ms(PWM_DELAY);
 							break;	
 							case 3:
 							OLED_Clear();
 							OLED_ShowString(12,0,(uint8_t*)"Jurisdiction:   Zhang Li",100);//输出第几张卡
 							TIM_Config(500);
-							delay_ms(1000);
+							delay_ms(PWM_DELAY);
 							TIM_Config(1500);
-							delay_ms(1000);
+							delay_ms(PWM_DELAY);
 							break;	
 							case 4:
 							OLED_Clear();
 							OLED_ShowString(12,0,(uint8_t*)"Jurisdiction:   wang jing wen",100);//输出第几张卡
 							TIM_Config(500);
-							delay_ms(1000);
+							delay_ms(PWM_DELAY);
 							TIM_Config(1500);
-							delay_ms(1000);
+							delay_ms(PWM_DELAY);
 							break;
 							case 5:
 							OLED_Clear();
 							OLED_ShowString(12,0,(uint8_t*)"Jurisdiction:   dou fu bing",100);//输出第几张卡
 							TIM_Config(500);
-							delay_ms(1000);
+							delay_ms(PWM_DELAY);
 							TIM_Config(1500);
-							delay_ms(1000);
+							delay_ms(PWM_DELAY);
 							break;
 						}			
 			}

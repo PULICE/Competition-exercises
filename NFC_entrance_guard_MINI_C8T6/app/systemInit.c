@@ -31,6 +31,7 @@ void deviceInit()
 
 void system_Init()
 {
+	//SystemInit();//标准API，主要用来初始化系统的各个时钟源频率,如果汇编文件（启动文件）有导入该函数则可以不写
 	boardInit();//板级资源初始化
 	deviceInit();//设备初始化
 }
