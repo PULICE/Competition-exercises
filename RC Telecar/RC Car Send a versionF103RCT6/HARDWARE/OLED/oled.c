@@ -347,7 +347,7 @@ void OLED_Init(void)
  	GPIO_SetBits(GPIOA,GPIO_Pin_7|GPIO_Pin_5);	//PD3,PD6 Êä³ö¸ß
 
 
-  delay_ms(500);
+  //delay_ms(500);
   OLED_WR_Byte(0xAE,OLED_CMD);//--display off
 	OLED_WR_Byte(0x00,OLED_CMD);//---set low column address
 	OLED_WR_Byte(0x10,OLED_CMD);//---set high column address

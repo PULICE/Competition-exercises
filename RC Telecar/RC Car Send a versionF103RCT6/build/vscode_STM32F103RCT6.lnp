@@ -1,0 +1,25 @@
+--cpu Cortex-M3
+"..\build\oled.o"
+"..\build\rf24l01.o"
+"..\build\adc.o"
+"..\build\bsp_spi_flash.o"
+"..\build\spi.o"
+"..\build\delay.o"
+"..\build\sys.o"
+"..\build\usart.o"
+"..\build\main.o"
+"..\build\stm32f10x_it.o"
+"..\build\system_stm32f10x.o"
+"..\build\core_cm3.o"
+"..\build\startup_stm32f10x_hd.o"
+"..\build\misc.o"
+"..\build\stm32f10x_gpio.o"
+"..\build\stm32f10x_rcc.o"
+"..\build\stm32f10x_usart.o"
+"..\build\stm32f10x_spi.o"
+"..\build\stm32f10x_adc.o"
+"..\build\stm32f10x_tim.o"
+--library_type=microlib --strict --scatter "..\build\vscode_STM32F103RCT6.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\vscode_STM32F103RCT6.map" -o ..\build\vscode_STM32F103RCT6.axf
